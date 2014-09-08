@@ -23,7 +23,6 @@
             android:textColor="@color/purple"
             android:textAppearance="?android:textAppearanceLarge"
             android:textSize="50sp"
-            android:text="12341"
             />
 
     </RelativeLayout>
@@ -101,10 +100,20 @@
             style="@style/MeadleTheme.NumberButtonStyle"
             android:text="9"/>
 
-        <Button
+
+
+        <RelativeLayout
+            android:layout_height="fill_parent"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            style="@style/MeadleTheme.NumberButtonStyle"/>
+            style="@style/MeadleTheme.DeleteButtonStyle"
+            >
+            <Button
+                android:id="@+id/accept_button"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_centerInParent="true"
+                style="@style/MeadleTheme.NumberButtonStyle"/>
+        </RelativeLayout>
 
         <Button
             android:id="@+id/numberpad_0"

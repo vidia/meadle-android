@@ -42,6 +42,12 @@ public class NumberPadActivity extends MeadleActivity implements View.OnClickLis
         findViewById(R.id.btn_delete).setOnClickListener(this);
 
         typeView  = (EditText) findViewById(R.id.textBox);
+
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            findViewById(R.id.accept_button).setBackground(new IconDrawable(this, Iconify.IconValue.fa_check).colorRes(R.color.purple));
+        } else {
+            findViewById(R.id.accept_button).setBackgroundDrawable(new IconDrawable(this, Iconify.IconValue.fa_check).colorRes(R.color.purple));
+        }
     }
 
 
