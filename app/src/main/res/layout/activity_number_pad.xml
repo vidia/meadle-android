@@ -14,7 +14,9 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/numberpad" >
 
-        <TextView
+        <EditText
+            android:editable="false"
+            android:id="@+id/textBox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
@@ -105,6 +107,7 @@
             style="@style/MeadleTheme.NumberButtonStyle"/>
 
         <Button
+            android:id="@+id/numberpad_0"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="@style/MeadleTheme.NumberButtonStyle"
