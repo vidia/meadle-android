@@ -16,7 +16,7 @@ public class MeadleActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        getWindow().requestFeature(Window.FEATURE_ACTION_BAR_OVERLAY);
+        //getWindow().requestFeature(Window.FEATURE_ACTION_BAR_OVERLAY);
         ActionBar actionBar = getActionBar();
         if(actionBar != null) {
             actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#000000ff")));

@@ -16,13 +16,6 @@ public class NumberPadActivity extends MeadleActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_number_pad);
-
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
-            findViewById(R.id.btn_delete).setBackground(new IconDrawable(this, Iconify.IconValue.fa_times_circle).colorRes(R.color.purple));
-        else
-            findViewById(R.id.btn_delete).setBackgroundDrawable(new IconDrawable(this, Iconify.IconValue.fa_times_circle).colorRes(R.color.purple));
-
-
     }
 
 
