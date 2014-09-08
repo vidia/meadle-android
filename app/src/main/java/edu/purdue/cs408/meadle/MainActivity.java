@@ -1,9 +1,11 @@
 package edu.purdue.cs408.meadle;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 
 public class MainActivity extends MeadleActivity {
@@ -11,6 +13,7 @@ public class MainActivity extends MeadleActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTheme(R.style.MeadleTheme);
         setContentView(R.layout.activity_start);
     }
 
@@ -32,5 +35,17 @@ public class MainActivity extends MeadleActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void onShare(View view) {
+        Intent sendIntent = new Intent();
+        sendIntent.setAction(Intent.ACTION_SEND);
+        sendIntent.putExtra(Intent.EXTRA_SUBJECT, "Meadle Invitation");
+        sendIntent.putExtra(Intent.EXTRA_TEXT, "Join my Meadle! " + "http://www.meadle.com/CODE");
+        sendIntent.setType("text/plain");
+        startActivity(sendIntent);
+    }
+
+    public void onJoin(View view) {
     }
 }

@@ -16,6 +16,7 @@
         android:layout_weight="1"
         android:gravity="center"
         android:layout_height="0dp"
+        android:onClick="onJoin"
         android:orientation="vertical">
 
         <IconTextView
@@ -47,6 +48,7 @@
         android:layout_weight="1"
         android:layout_height="0dp"
         android:gravity="center"
+        android:onClick="onShare"
         android:orientation="vertical">
 
         <IconTextView
