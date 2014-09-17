@@ -21,7 +21,7 @@ import edu.purdue.cs408.meadle.interfaces.OnStartMeetingFinishedListener;
 /**
  * Created by kyle on 9/17/14.
  */
-public class startMeetingTask extends AsyncTask<Void,Void,Void>{
+public class StartMeetingTask extends AsyncTask<Void,Void,Void>{
     public static String BASEURL = "http://meadle.herokuapp.com/";
     private OnStartMeetingFinishedListener listener ;
     private String userId;
@@ -29,7 +29,7 @@ public class startMeetingTask extends AsyncTask<Void,Void,Void>{
     private long lng;
     private Context c;
 
-    public startMeetingTask(OnStartMeetingFinishedListener listener,Context c,String userId,long lat,long lng){
+    public StartMeetingTask(OnStartMeetingFinishedListener listener, Context c, String userId, long lat, long lng){
         this.listener = listener;
         this.c = c;
         this.userId = userId;
