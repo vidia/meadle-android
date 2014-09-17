@@ -24,6 +24,18 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="edu.purdue.cs408.meadle.MainActivity" />
         </activity>
+        <activity
+            android:name=".WaitingActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/title_activity_waiting"
+            android:theme="@style/FullscreenTheme" >
+            <intent-filter>
+                <data android:scheme="http" android:host="thatisa.link"/>
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <action android:name="android.intent.action.VIEW" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

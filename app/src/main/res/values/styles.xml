@@ -3,10 +3,8 @@
 
     <!-- Base application theme. -->
     <style name="MeadleTheme" parent="android:Theme.Holo.Light">
-
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:actionBarStyle">@style/MeadleTheme.ActionBarStyle</item>
-
     </style>
 
     <style name="MeadleTheme.ActionBarStyle" parent="@android:style/Widget.Holo.Light.ActionBar">
@@ -19,9 +17,7 @@
         <item name="android:textStyle">bold</item>
     </style>
 
-
-
-    <style name="MeadleTheme.NumberButtonStyle" >
+    <style name="MeadleTheme.NumberButtonStyle">
         <item name="android:background">@android:color/transparent</item>
         <item name="android:textColor">@color/purple</item>
         <item name="android:textAppearance">?android:textAppearanceLarge</item>
@@ -33,9 +29,26 @@
         <item name="android:paddingRight">40dp</item>
     </style>
 
-    <style name="MeadleTheme.DeleteButtonStyle" parent="MeadleTheme.NumberButtonStyle" >
+    <style name="MeadleTheme.DeleteButtonStyle" parent="MeadleTheme.NumberButtonStyle">
         <item name="android:paddingLeft">20dp</item>
         <item name="android:paddingRight">20dp</item>
     </style>
+
+    <style name="FullscreenTheme" parent="android:Theme.NoTitleBar">
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowBackground">@null</item>
+        <item name="metaButtonBarStyle">@style/ButtonBar</item>
+        <item name="metaButtonBarButtonStyle">@style/ButtonBarButton</item>
+    </style>
+
+    <style name="ButtonBar">
+        <item name="android:paddingLeft">2dp</item>
+        <item name="android:paddingTop">5dp</item>
+        <item name="android:paddingRight">2dp</item>
+        <item name="android:paddingBottom">0dp</item>
+        <item name="android:background">@android:drawable/bottom_bar</item>
+    </style>
+
+    <style name="ButtonBarButton" />
 
 </resources>
