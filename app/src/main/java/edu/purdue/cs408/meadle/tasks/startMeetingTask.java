@@ -60,9 +60,10 @@ public class StartMeetingTask extends AsyncTask<Void,Void,Void>{
         }
         postRequest.setEntity(se);
         HttpResponse response = null;
+        String jsonResp = null;
         try{
             response = client.execute(postRequest);
-            String jsonResp = EntityUtils.toString(response.getEntity());
+            jsonResp = EntityUtils.toString(response.getEntity());
 
 
         }catch(Exception e){
@@ -71,7 +72,7 @@ public class StartMeetingTask extends AsyncTask<Void,Void,Void>{
         }
 
         if(listener != null){
-            listener.onStartMeetingFinished();
+            listener.onStartMeetingFinished(jsonResp);
         }
         return null;
     }
