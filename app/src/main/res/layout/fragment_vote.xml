@@ -9,7 +9,7 @@
     tools:context="edu.purdue.cs408.meadle.VoteActivity$PlaceholderFragment">
 
 
-    <ListView
+    <com.nhaarman.listviewanimations.itemmanipulation.DynamicListView
         android:id="@android:id/list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
