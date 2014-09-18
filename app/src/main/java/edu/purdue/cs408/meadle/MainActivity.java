@@ -50,4 +50,10 @@ public class MainActivity extends MeadleActivity {
         Intent joinIntent = new Intent(this, NumberPadActivity.class);
         startActivity(joinIntent);
     }
+
+    //For testing.
+    public void onVote(View view) {
+        Intent voteIntent = new Intent(this, VoteActivity.class);
+        startActivity(voteIntent);
+    }
 }

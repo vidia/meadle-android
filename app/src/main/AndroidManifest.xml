@@ -24,6 +24,10 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="edu.purdue.cs408.meadle.MainActivity" />
         </activity>
+        <activity
+            android:name=".VoteActivity"
+            android:label="@string/title_activity_vote" >
+        </activity>
     </application>
 
 </manifest>
