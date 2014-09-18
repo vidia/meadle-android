@@ -1,6 +1,5 @@
-package edu.purdue.cs408.meadle;
+package edu.purdue.cs408.meadle.activities;
 
-import android.app.Activity;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -8,10 +7,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import com.joanzapata.android.iconify.IconDrawable;
 import com.joanzapata.android.iconify.Iconify;
+
+import edu.purdue.cs408.meadle.R;
+import edu.purdue.cs408.meadle.activities.MeadleActivity;
 
 
 public class NumberPadActivity extends MeadleActivity implements View.OnClickListener {

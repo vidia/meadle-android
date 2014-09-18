@@ -9,7 +9,7 @@
     android:layout_gravity="center"
     android:gravity="center"
     android:orientation="vertical"
-    tools:context="edu.purdue.cs408.meadle.MainActivity">
+    tools:context="edu.purdue.cs408.meadle.activities.MainActivity">
 
     <LinearLayout
         android:layout_width="match_parent"

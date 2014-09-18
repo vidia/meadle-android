@@ -1,11 +1,12 @@
-package edu.purdue.cs408.meadle;
+package edu.purdue.cs408.meadle.activities;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+
+import edu.purdue.cs408.meadle.R;
 
 
 public class MainActivity extends MeadleActivity {
