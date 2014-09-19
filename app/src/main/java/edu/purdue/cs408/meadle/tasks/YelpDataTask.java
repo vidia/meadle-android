@@ -15,15 +15,13 @@ import java.util.ArrayList;
 
 import edu.purdue.cs408.meadle.interfaces.OnYelpDataTaskFinishedListener;
 import edu.purdue.cs408.meadle.models.YelpLocation;
-import edu.purdue.cs408.meadle.util.yelp;
+import edu.purdue.cs408.meadle.util.yelp.YelpAPI;
 
 /**
  * Created by jeremy on 9/18/14.
  */
 public class YelpDataTask extends AsyncTask<String, Integer, ArrayList<YelpLocation>> {
-    public static String BASEURL = "http://api.yelp.com/v2";
     private OnYelpDataTaskFinishedListener listener;
-    private String userId = "<<yelpid>>";
     private Context c;
 
     public YelpDataTask(OnYelpDataTaskFinishedListener listener){
@@ -37,14 +35,11 @@ public class YelpDataTask extends AsyncTask<String, Integer, ArrayList<YelpLocat
 
         for (int i = 0; i < count; i++) {
             String id = ids[i];
-            HttpClient client = new DefaultHttpClient();
-            HttpGet getRequest = new HttpGet(BASEURL+"/business/"+id+"?userId="+userId);
-            HttpResponse response = null;
             JSONObject jsonResp = null;
 
             try {
-                response = client.execute(getRequest);
-                jsonResp = new JSONObject(EntityUtils.toString(response.getEntity()));
+                String res = YelpAPI.getInstance().searchByBusinessId(id);
+                jsonResp = new JSONObject(res);
                 locations.add(new YelpLocation(jsonResp));
             } catch(Exception e){
                 e.printStackTrace();
