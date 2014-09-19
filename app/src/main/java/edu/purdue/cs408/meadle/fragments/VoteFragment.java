@@ -6,19 +6,27 @@ import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 
 import com.nhaarman.listviewanimations.appearance.AnimationAdapter;
 import com.nhaarman.listviewanimations.appearance.simple.SwingBottomInAnimationAdapter;
 import com.nhaarman.listviewanimations.itemmanipulation.DynamicListView;
 import com.nhaarman.listviewanimations.itemmanipulation.dragdrop.TouchViewDraggableManager;
 
+import java.util.ArrayList;
+
 import edu.purdue.cs408.meadle.R;
 import edu.purdue.cs408.meadle.adapters.StableArrayAdapter;
+import edu.purdue.cs408.meadle.adapters.YelpArrayAdapter;
+import edu.purdue.cs408.meadle.data.YelpTestData;
+import edu.purdue.cs408.meadle.interfaces.OnYelpDataTaskFinishedListener;
+import edu.purdue.cs408.meadle.models.YelpLocation;
+import edu.purdue.cs408.meadle.tasks.YelpDataTask;
 
 /**
  * A placeholder fragment containing a simple view.
  */
-public class VoteFragment extends ListFragment {
+public class VoteFragment extends ListFragment implements OnYelpDataTaskFinishedListener {
 
     public VoteFragment() {
     }
@@ -34,23 +42,21 @@ public class VoteFragment extends ListFragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        Handler handler=new Handler();
+        new YelpDataTask(this).execute(YelpTestData.IDS);
 
-        final Runnable r = new Runnable() {
-            public void run() {
-                //TODO: Shorten this line.
-                AnimationAdapter ada = new SwingBottomInAnimationAdapter( new StableArrayAdapter<String>(getActivity(), R.layout.list_row_draganddrop, R.id.list_row_draganddrop_textview, new String[] {"Hello", "I", "Am", "A", "List", "of", "Locations"}));
-                ada.setAbsListView(getListView());
-                getListView().setAdapter(ada);
-            }
-        };
-
-        handler.postDelayed(r, 1000);
 
         DynamicListView listView = (DynamicListView) getListView();
         listView.enableDragAndDrop();
         listView.setDraggableManager(new TouchViewDraggableManager(R.id.list_row_draganddrop_touchview));
 //            listView.setOnItemMovedListener(new MyOnItemMovedListener(adapter));
 //            listView.setOnItemLongClickListener(new MyOnItemLongClickListener(listView));
+    }
+
+    @Override
+    public void OnYelpDataTaskFinished(ArrayList<YelpLocation> locations) {
+        BaseAdapter ada = new YelpArrayAdapter(getActivity(), R.layout.list_row_draganddrop, R.id.list_row_draganddrop_textview, locations);
+        AnimationAdapter aada = new SwingBottomInAnimationAdapter(ada);
+        aada.setAbsListView(getListView());
+        getListView().setAdapter(aada);
     }
 }
