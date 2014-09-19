@@ -34,6 +34,10 @@ public class MainActivity extends MeadleActivity {
         int id = item.getItemId();
         if (id == R.id.action_settings) {
             return true;
+        } else if(id == R.id.action_dev_vote) {
+            Intent voteIntent = new Intent(this, VoteActivity.class);
+            startActivity(voteIntent);
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -50,11 +54,5 @@ public class MainActivity extends MeadleActivity {
     public void onJoin(View view) {
         Intent joinIntent = new Intent(this, NumberPadActivity.class);
         startActivity(joinIntent);
-    }
-
-    //For testing.
-    public void onVote(View view) {
-        Intent voteIntent = new Intent(this, VoteActivity.class);
-        startActivity(voteIntent);
     }
 }
