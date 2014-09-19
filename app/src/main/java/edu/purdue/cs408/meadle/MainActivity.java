@@ -52,7 +52,7 @@ public class MainActivity extends MeadleActivity {
         Intent sendIntent = new Intent();
         sendIntent.setAction(Intent.ACTION_SEND);
         sendIntent.putExtra(Intent.EXTRA_SUBJECT, "Meadle Invitation");
-        sendIntent.putExtra(Intent.EXTRA_TEXT, "Join my Meadle! " + "http://www.meadle.com/CODE");
+        sendIntent.putExtra(Intent.EXTRA_TEXT, "Join my Meadle! " + "http://www.meadle.me/CODE");
         sendIntent.setType("text/plain");
         startActivity(sendIntent);
     }
