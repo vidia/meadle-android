@@ -32,12 +32,13 @@ public class MainActivity extends MeadleActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        } else if(id == R.id.action_dev_vote) {
-            Intent voteIntent = new Intent(this, VoteActivity.class);
-            startActivity(voteIntent);
-            return true;
+        switch (id) {
+            case R.id.action_settings:
+                return true;
+            case R.id.action_dev_vote:
+                Intent voteIntent = new Intent(this, VoteActivity.class);
+                startActivity(voteIntent);
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }

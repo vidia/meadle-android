@@ -5,8 +5,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import edu.purdue.cs408.meadle.R;
-import edu.purdue.cs408.meadle.activities.MeadleActivity;
-import edu.purdue.cs408.meadle.fragments.PlaceholderFragment;
+import edu.purdue.cs408.meadle.fragments.VoteFragment;
 
 
 public class VoteActivity extends MeadleActivity {
@@ -17,7 +16,7 @@ public class VoteActivity extends MeadleActivity {
         setContentView(R.layout.activity_vote);
         if (savedInstanceState == null) {
             getFragmentManager().beginTransaction()
-                    .add(R.id.container, new PlaceholderFragment())
+                    .add(R.id.container, new VoteFragment())
                     .commit();
         }
     }

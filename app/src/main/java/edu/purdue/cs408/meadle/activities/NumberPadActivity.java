@@ -106,6 +106,7 @@ public class NumberPadActivity extends MeadleActivity implements View.OnClickLis
                 break;
 
             case R.id.btn_delete:
+                //TODO: Allow the back button to be spammed
                 typeCharacter((char)8); //delete
         }
     }

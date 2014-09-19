@@ -51,6 +51,7 @@ public class StableArrayAdapter<T> extends ArrayAdapter<T> implements Swappable 
 
     @Override
     public void swapItems(int ifirst, int isecond) {
+        //TODO: Change to costom sort
         Collections.swap(mItems, ifirst, isecond);
     }
 }

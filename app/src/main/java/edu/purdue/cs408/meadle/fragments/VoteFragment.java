@@ -18,9 +18,9 @@ import edu.purdue.cs408.meadle.adapters.StableArrayAdapter;
 /**
  * A placeholder fragment containing a simple view.
  */
-public class PlaceholderFragment extends ListFragment {
+public class VoteFragment extends ListFragment {
 
-    public PlaceholderFragment() {
+    public VoteFragment() {
     }
 
     @Override
@@ -36,10 +36,9 @@ public class PlaceholderFragment extends ListFragment {
 
         Handler handler=new Handler();
 
-        final Runnable r = new Runnable()
-        {
-            public void run()
-            {
+        final Runnable r = new Runnable() {
+            public void run() {
+                //TODO: Shorten this line.
                 AnimationAdapter ada = new SwingBottomInAnimationAdapter( new StableArrayAdapter<String>(getActivity(), R.layout.list_row_draganddrop, R.id.list_row_draganddrop_textview, new String[] {"Hello", "I", "Am", "A", "List", "of", "Locations"}));
                 ada.setAbsListView(getListView());
                 getListView().setAdapter(ada);
