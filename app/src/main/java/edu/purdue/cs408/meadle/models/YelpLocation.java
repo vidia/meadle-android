@@ -20,6 +20,9 @@ public class YelpLocation {
         image_url = location.getString("image_url");
         shortDescription = location.getString("snippet_text");
         JSONArray categories = location.getJSONArray("categories");
+
+        this.categories = new ArrayList<String>();
+
         for (int i = 0; i < categories.length(); i++) {
             JSONArray row = categories.getJSONArray(i);
             this.categories.add(row.getString(0));
