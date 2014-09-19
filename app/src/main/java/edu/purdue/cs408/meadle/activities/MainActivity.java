@@ -7,6 +7,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import edu.purdue.cs408.meadle.R;
+import edu.purdue.cs408.meadle.WaitingActivity;
 
 
 public class MainActivity extends MeadleActivity {
@@ -39,8 +40,18 @@ public class MainActivity extends MeadleActivity {
                 Intent voteIntent = new Intent(this, VoteActivity.class);
                 startActivity(voteIntent);
                 return true;
+            case (R.id.action_waiting):
+                openWaitingActivity();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
-        return super.onOptionsItemSelected(item);
+    }
+
+    public void openWaitingActivity() {
+        Intent intent = new Intent(this, WaitingActivity.class);
+        startActivity(intent);
+        return;
     }
 
     public void onShare(View view) {

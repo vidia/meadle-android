@@ -10,4 +10,9 @@
         android:title="Test Vote"
         android:orderInCategory="100"
         android:showAsAction="never" />
+
+    <item android:id="@+id/action_waiting"
+        android:title="@string/action_waiting"
+        android:orderInCategory="100"
+        android:showAsAction="never" />
 </menu>
