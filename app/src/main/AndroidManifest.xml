@@ -15,6 +15,16 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+            <intent-filter>
+                <data
+                    android:host="meadle.me"
+                    android:scheme="http" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <action android:name="android.intent.action.VIEW" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".NumberPadActivity"
@@ -26,15 +36,7 @@
         </activity>
         <activity
             android:name=".WaitingActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/title_activity_waiting"
-            android:theme="@style/FullscreenTheme" >
-            <intent-filter>
-                <data android:scheme="http" android:host="thatisa.link"/>
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-                <action android:name="android.intent.action.VIEW" />
-            </intent-filter>
+            android:label="@string/title_activity_waiting" >
         </activity>
     </application>
 
