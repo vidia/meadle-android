@@ -10,6 +10,7 @@ import com.nhaarman.listviewanimations.util.Swappable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
 /**
  * Created by david on 9/18/14.
@@ -18,10 +19,10 @@ public class StableArrayAdapter<T> extends ArrayAdapter<T> implements Swappable 
 
     private ArrayList<T> mItems;
 
-    public StableArrayAdapter(Context context, int listItem, int textView, T[] strings) {
+    public StableArrayAdapter(Context context, int listItem, int textView, List<T> data) {
         super(context, listItem, textView);
-        mItems = new ArrayList<T>(strings.length);
-        mItems.addAll(Arrays.asList(strings));
+        mItems = new ArrayList<T>(data.size());
+        mItems.addAll(data);
     }
 
     @Override
