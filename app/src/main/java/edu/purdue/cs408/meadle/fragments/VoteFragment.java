@@ -3,12 +3,17 @@ package edu.purdue.cs408.meadle.fragments;
 import android.app.ListFragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 
+import com.joanzapata.android.iconify.IconDrawable;
+import com.joanzapata.android.iconify.Iconify;
 import com.nhaarman.listviewanimations.appearance.AnimationAdapter;
 import com.nhaarman.listviewanimations.appearance.simple.SwingBottomInAnimationAdapter;
 import com.nhaarman.listviewanimations.itemmanipulation.DynamicListView;
@@ -29,6 +34,7 @@ import edu.purdue.cs408.meadle.tasks.YelpDataTask;
 public class VoteFragment extends ListFragment implements OnYelpDataTaskFinishedListener {
 
     public VoteFragment() {
+        setHasOptionsMenu(true);
     }
 
     @Override
@@ -37,6 +43,26 @@ public class VoteFragment extends ListFragment implements OnYelpDataTaskFinished
         View rootView = inflater.inflate(R.layout.fragment_vote, container, false);
         return rootView;
     }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        // Set an icon in the ActionBar
+        menu.findItem(R.id.action_confirm).setIcon(
+                new IconDrawable(getActivity(), Iconify.IconValue.fa_check)
+                        .colorRes(R.color.purple)
+                        .actionBarSize());
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch(item.getItemId()) {
+            case R.id.action_confirm:
+                return true;
+        }
+        return false;
+    }
+
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
