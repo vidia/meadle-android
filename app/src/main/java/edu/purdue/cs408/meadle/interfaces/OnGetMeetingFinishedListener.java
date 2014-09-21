@@ -6,5 +6,5 @@ import org.json.JSONObject;
  * Created by kyle on 9/17/14.
  */
 public interface OnGetMeetingFinishedListener {
-    public void OnGetMeetingFinished(JSONObject jsonObject);
+    public void onGetMeetingFinished(JSONObject jsonObject);
 }

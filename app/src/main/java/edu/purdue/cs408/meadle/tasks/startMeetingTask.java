@@ -13,6 +13,7 @@ import org.apache.http.util.EntityUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -27,7 +28,6 @@ import edu.purdue.cs408.meadle.structures.UserLocation;
  * Task used to initiated a meeting on the server
  */
 public class StartMeetingTask extends AsyncTask<Void, Void, String> {
-    public static String BASEURL = "http://meadle.herokuapp.com/";
     private OnStartMeetingFinishedListener listener ;
     private String userId;
     private long lat;
@@ -75,7 +75,7 @@ public class StartMeetingTask extends AsyncTask<Void, Void, String> {
             jsonResp = EntityUtils.toString(response.getEntity());
 
 
-        }catch(Exception e){
+        }catch(IOException e){
             e.printStackTrace();
 
         }
