@@ -1,27 +1,32 @@
 package edu.purdue.cs408.meadle.tasks;
 
 import android.content.Context;
+import android.net.Uri;
 import android.os.AsyncTask;
-import android.text.format.Time;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.TimeZone;
 
+import edu.purdue.cs408.meadle.Constants;
 import edu.purdue.cs408.meadle.interfaces.OnStartMeetingFinishedListener;
+import edu.purdue.cs408.meadle.structures.UserLocation;
 
 /**
  * Created by kyle on 9/17/14.
+ * Task used to initiated a meeting on the server
  */
-public class StartMeetingTask extends AsyncTask<Void,Void,Void>{
+public class StartMeetingTask extends AsyncTask<Void, Void, String> {
     public static String BASEURL = "http://meadle.herokuapp.com/";
     private OnStartMeetingFinishedListener listener ;
     private String userId;
@@ -29,23 +34,27 @@ public class StartMeetingTask extends AsyncTask<Void,Void,Void>{
     private long lng;
     private Context c;
 
-    public StartMeetingTask(OnStartMeetingFinishedListener listener, Context c, String userId, long lat, long lng){
+    public StartMeetingTask(UserLocation location,OnStartMeetingFinishedListener listener){
         this.listener = listener;
-        this.c = c;
-        this.userId = userId;
-        this.lat = lat;
-        this.lng = lng;
+        this.userId = location.getUserId();
+        this.lat = location.getLat();
+        this.lng = location.getLng();
     }
 
     @Override
-    protected Void doInBackground(Void... voids) {
+    protected String doInBackground(Void... voids) {
         HttpClient client = new DefaultHttpClient();
-        HttpPost postRequest = new HttpPost(BASEURL+"/meeting");
+        Uri.Builder builder = new Uri.Builder();
+        builder.scheme("http").authority(Constants.BASEURL).appendPath("meeting");
+        HttpPost postRequest = new HttpPost(builder.toString());
         JSONObject jObject = new JSONObject();
 
-        Time now = new Time();
-        now.setToNow();
-        String datetime = now.format("%d.%m.%Y %H.%M.%S");
+       // http://stackoverflow.com/questions/3914404/how-to-get-current-moment-in-iso-8601-format
+        TimeZone tz = TimeZone.getTimeZone("UTC");
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm'Z'");
+        df.setTimeZone(tz);
+        String datetime = df.format(new Date());
+
         StringEntity se = null;
 
         try {
@@ -53,7 +62,7 @@ public class StartMeetingTask extends AsyncTask<Void,Void,Void>{
             jObject.put("lat",lat);
             jObject.put("lng",lng);
             jObject.put("datetime",datetime);
-            StringEntity sEnt = new StringEntity(jObject.toString());
+            se = new StringEntity(jObject.toString());
 
         }catch(Exception e){
             e.printStackTrace();
@@ -71,9 +80,23 @@ public class StartMeetingTask extends AsyncTask<Void,Void,Void>{
 
         }
 
+        return jsonResp;
+    }
+
+
+
+    @Override
+    protected void onPostExecute(String result){
         if(listener != null){
-            listener.onStartMeetingFinished(jsonResp);
+            JSONObject jsonObject = null;
+            try {
+                jsonObject = new JSONObject(result);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            listener.onStartMeetingFinished(jsonObject);
+
         }
-        return null;
+
     }
 }

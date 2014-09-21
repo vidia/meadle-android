@@ -1,50 +1,48 @@
 package edu.purdue.cs408.meadle.tasks;
 
-import android.content.Context;
+import android.net.Uri;
 import android.os.AsyncTask;
-import android.text.format.Time;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpPut;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
+import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.DateFormat;
-import java.util.Date;
+import java.io.IOException;
 
+import edu.purdue.cs408.meadle.Constants;
 import edu.purdue.cs408.meadle.interfaces.OnJoinMeetingFinishedListener;
-import edu.purdue.cs408.meadle.interfaces.OnStartMeetingFinishedListener;
+import edu.purdue.cs408.meadle.structures.UserLocation;
 
 /**
  * Created by kyle on 9/17/14.
+ * Task to have a user join a meeting on the server
  */
-public class JoinMeetingTask extends AsyncTask<Void,Void,Void>{
-    public static String BASEURL = "http://meadle.herokuapp.com/";
+public class JoinMeetingTask extends AsyncTask<Void, Void, String> {
     private OnJoinMeetingFinishedListener listener ;
     private String userId;
     private String meadleId;
     private long lat;
     private long lng;
-    private Context c;
 
-    public JoinMeetingTask(OnJoinMeetingFinishedListener listener, Context c, String meadleId,String userId, long lat, long lng){
+    public JoinMeetingTask(String meadleId,UserLocation location,OnJoinMeetingFinishedListener listener){
         this.listener = listener;
-        this.c = c;
-        this.userId = userId;
+        this.userId = location.getUserId();
         this.meadleId = meadleId;
-        this.lat = lat;
-        this.lng = lng;
+        this.lat = location.getLat();
+        this.lng = location.getLng();
     }
 
     @Override
-    protected Void doInBackground(Void... voids) {
+    protected String doInBackground(Void... voids) {
         HttpClient client = new DefaultHttpClient();
-        HttpPut putRequest = new HttpPut(BASEURL+"/meeting/"+meadleId+"/join?meetingId="+meadleId);
+        Uri.Builder builder  = new Uri.Builder();
+        builder.scheme("http").authority(Constants.BASEURL).appendPath("meeting").appendPath(meadleId).appendPath("join");
+        HttpPut putRequest = new HttpPut(builder.toString());
         JSONObject jObject = new JSONObject();
         StringEntity se = null;
         try {
@@ -63,14 +61,25 @@ public class JoinMeetingTask extends AsyncTask<Void,Void,Void>{
             jsonResp = EntityUtils.toString(response.getEntity());
 
 
-        }catch(Exception e){
+        }catch(IOException e){
             e.printStackTrace();
 
         }
+        return jsonResp;
+    }
 
+    @Override
+    protected void onPostExecute(String result){
         if(listener != null){
-            listener.OnJoinMeetingFinished(jsonResp);
+            JSONObject jsonObject = null;
+            try {
+                 jsonObject = new JSONObject(result);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            listener.OnJoinMeetingFinished(jsonObject);
+
         }
-        return null;
+
     }
 }
