@@ -11,11 +11,12 @@ import android.widget.EditText;
 import com.joanzapata.android.iconify.IconDrawable;
 import com.joanzapata.android.iconify.Iconify;
 
+import edu.purdue.cs408.meadle.Meadle;
 import edu.purdue.cs408.meadle.R;
 import edu.purdue.cs408.meadle.activities.MeadleActivity;
 
 
-public class NumberPadActivity extends MeadleActivity implements View.OnClickListener {
+public class NumberPadActivity extends MeadleActivity implements View.OnClickListener, View.OnLongClickListener {
 
     private static final int[] numberButtonRes = new int[] {
             R.id.numberpad_0,
@@ -44,11 +45,9 @@ public class NumberPadActivity extends MeadleActivity implements View.OnClickLis
 
         typeView  = (EditText) findViewById(R.id.textBox);
 
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-            findViewById(R.id.accept_button).setBackground(new IconDrawable(this, Iconify.IconValue.fa_check).colorRes(R.color.purple));
-        } else {
-            findViewById(R.id.accept_button).setBackgroundDrawable(new IconDrawable(this, Iconify.IconValue.fa_check).colorRes(R.color.purple));
-        }
+        invalidateCheckButton();
+
+        findViewById(R.id.btn_delete).setOnLongClickListener(this);
     }
 
 
@@ -112,15 +111,45 @@ public class NumberPadActivity extends MeadleActivity implements View.OnClickLis
     }
 
     private void typeCharacter(char c) {
-        if(c != (char)8) {
-            typeView.getText().append(c);
+        char DELETE_KEY = (char) 8;
+        if(c != DELETE_KEY) {
+            if(typeView.getText().length() < Meadle.CODE_LENGTH) {
+                typeView.getText().append(c);
+                invalidateCheckButton();
+            }
         } else {
             Log.d("TYPING", "Deleting");
             String s = typeView.getText().toString();
-            if(s.length() > 0) {
+            if (s.length() > 0) {
                 s = s.substring(0, s.length() - 1);
                 typeView.setText(s);
             }
+            invalidateCheckButton();
         }
+    }
+
+    private void invalidateCheckButton() {
+        int color;
+        if(typeView.getText().length() == Meadle.CODE_LENGTH)
+            color = R.color.purple;
+        else
+            color = android.R.color.darker_gray;
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            findViewById(R.id.accept_button).setBackground(new IconDrawable(this, Iconify.IconValue.fa_check).colorRes(color));
+        } else {
+            findViewById(R.id.accept_button).setBackgroundDrawable(new IconDrawable(this, Iconify.IconValue.fa_check).colorRes(color));
+        }
+    }
+
+    @Override
+    public boolean onLongClick(View v) {
+        switch(v.getId()) {
+            case R.id.btn_delete:
+                typeView.setText("");
+                invalidateCheckButton();
+                return true;
+        }
+        return false;
     }
 }
