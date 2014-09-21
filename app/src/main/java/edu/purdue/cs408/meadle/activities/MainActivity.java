@@ -7,7 +7,6 @@ import android.view.MenuItem;
 import android.view.View;
 
 import edu.purdue.cs408.meadle.R;
-import edu.purdue.cs408.meadle.WaitingActivity;
 
 
 public class MainActivity extends MeadleActivity {

@@ -1,5 +1,6 @@
-package edu.purdue.cs408.meadle;
+package edu.purdue.cs408.meadle.activities;
 
+import edu.purdue.cs408.meadle.R;
 import edu.purdue.cs408.meadle.util.SystemUiHider;
 
 import android.annotation.TargetApi;
