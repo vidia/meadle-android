@@ -3,6 +3,7 @@ package edu.purdue.cs408.meadle.tasks;
 import android.content.Context;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -18,10 +19,11 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.TimeZone;
+import java.util.logging.ConsoleHandler;
 
 import edu.purdue.cs408.meadle.Constants;
 import edu.purdue.cs408.meadle.interfaces.OnStartMeetingFinishedListener;
-import edu.purdue.cs408.meadle.structures.UserLocation;
+import edu.purdue.cs408.meadle.models.UserLocation;
 
 /**
  * Created by kyle on 9/17/14.
@@ -46,8 +48,10 @@ public class StartMeetingTask extends AsyncTask<Void, Void, String> {
         HttpClient client = new DefaultHttpClient();
         Uri.Builder builder = new Uri.Builder();
         builder.scheme("http").authority(Constants.BASEURL).appendPath("meeting");
+        Log.d("StartMeetingTask","URL="+builder.toString());
         HttpPost postRequest = new HttpPost(builder.toString());
         JSONObject jObject = new JSONObject();
+
 
        // http://stackoverflow.com/questions/3914404/how-to-get-current-moment-in-iso-8601-format
         TimeZone tz = TimeZone.getTimeZone("UTC");
@@ -62,12 +66,14 @@ public class StartMeetingTask extends AsyncTask<Void, Void, String> {
             jObject.put("lat",lat);
             jObject.put("lng",lng);
             jObject.put("datetime",datetime);
-            se = new StringEntity(jObject.toString());
+            Log.d("OnStartMeetingTask", "json="+jObject.toString());
+            se = new StringEntity(jObject.toString(),"UTF8");
 
         }catch(Exception e){
             e.printStackTrace();
         }
         postRequest.setEntity(se);
+        postRequest.setHeader("Content-type", "application/json");
         HttpResponse response = null;
         String jsonResp = null;
         try{

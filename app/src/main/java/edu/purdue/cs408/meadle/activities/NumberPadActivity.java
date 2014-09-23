@@ -1,5 +1,6 @@
 package edu.purdue.cs408.meadle.activities;
 
+import android.nfc.Tag;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,12 +12,19 @@ import android.widget.EditText;
 import com.joanzapata.android.iconify.IconDrawable;
 import com.joanzapata.android.iconify.Iconify;
 
+import org.json.JSONObject;
+
+import edu.purdue.cs408.meadle.GcmManager;
 import edu.purdue.cs408.meadle.R;
 import edu.purdue.cs408.meadle.activities.MeadleActivity;
+import edu.purdue.cs408.meadle.interfaces.GetGcmRegListener;
+import edu.purdue.cs408.meadle.interfaces.OnStartMeetingFinishedListener;
+import edu.purdue.cs408.meadle.models.UserLocation;
+import edu.purdue.cs408.meadle.tasks.StartMeetingTask;
 
 
-public class NumberPadActivity extends MeadleActivity implements View.OnClickListener {
-
+public class NumberPadActivity extends MeadleActivity implements View.OnClickListener,GetGcmRegListener,OnStartMeetingFinishedListener {
+    private static  final String TAG = "NumperPadActivity";
     private static final int[] numberButtonRes = new int[] {
             R.id.numberpad_0,
             R.id.numberpad_1,
@@ -35,7 +43,11 @@ public class NumberPadActivity extends MeadleActivity implements View.OnClickLis
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_number_pad);
+        // Get the GCM RegID, wait for listener to respond
+        GcmManager gcmManager = new GcmManager(this);
+        gcmManager.getRegID(this);
 
         for(int res : numberButtonRes) {
             findViewById(res).setOnClickListener(this);
@@ -122,5 +134,23 @@ public class NumberPadActivity extends MeadleActivity implements View.OnClickLis
                 typeView.setText(s);
             }
         }
+    }
+
+     /*
+            Once we have received the gcm id we can now start a meeting
+      */
+    @Override
+    public void OnRegIdReceived(String regId) {
+        UserLocation location = new UserLocation(regId,100.29,89.05);
+        StartMeetingTask task = new StartMeetingTask(location,this);
+        task.execute();
+
+    }
+
+    @Override
+    public void onStartMeetingFinished(JSONObject jsonObject) {
+        Log.d(TAG,"OnStartMeetingFinsihed" + jsonObject.toString());
+
+
     }
 }

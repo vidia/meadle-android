@@ -3,6 +3,14 @@
     package="edu.purdue.cs408.meadle" >
 
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+
+
+    <permission android:name="edu.purdue.cs408.meadle.C2D_MESSAGE"
+        android:protectionLevel="signature" />
+    <uses-permission android:name="edu.purdue.cs408.meadle.C2D_MESSAGE" />
 
     <application
         android:allowBackup="true"
