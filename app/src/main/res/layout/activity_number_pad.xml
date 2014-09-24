@@ -128,8 +128,9 @@
             style="@style/MeadleTheme.DeleteButtonStyle"
             >
             <ImageButton
-                android:id="@+id/btn_delete"
+                android:id="@+id/btn_num_pad_delete"
                 android:layout_centerInParent="true"
+                android:longClickable="true"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:scaleType="center"
