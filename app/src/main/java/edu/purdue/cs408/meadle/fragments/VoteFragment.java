@@ -2,11 +2,12 @@ package edu.purdue.cs408.meadle.fragments;
 
 import android.app.ListFragment;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
+import android.widget.ListView;
 
 import com.nhaarman.listviewanimations.appearance.AnimationAdapter;
 import com.nhaarman.listviewanimations.appearance.simple.SwingBottomInAnimationAdapter;
@@ -16,7 +17,6 @@ import com.nhaarman.listviewanimations.itemmanipulation.dragdrop.TouchViewDragga
 import java.util.ArrayList;
 
 import edu.purdue.cs408.meadle.R;
-import edu.purdue.cs408.meadle.adapters.StableArrayAdapter;
 import edu.purdue.cs408.meadle.adapters.YelpArrayAdapter;
 import edu.purdue.cs408.meadle.data.YelpTestData;
 import edu.purdue.cs408.meadle.interfaces.OnYelpDataTaskFinishedListener;
@@ -54,7 +54,7 @@ public class VoteFragment extends ListFragment implements OnYelpDataTaskFinished
 
     @Override
     public void OnYelpDataTaskFinished(ArrayList<YelpLocation> locations) {
-        BaseAdapter ada = new YelpArrayAdapter(getActivity(), R.layout.list_row_draganddrop, R.id.list_row_draganddrop_textview, locations);
+        BaseAdapter ada = new YelpArrayAdapter(getActivity(), R.layout.yelp_list_item, R.id.list_row_draganddrop_textview, locations);
         AnimationAdapter aada = new SwingBottomInAnimationAdapter(ada);
         aada.setAbsListView(getListView());
         getListView().setAdapter(aada);
