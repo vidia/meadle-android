@@ -26,8 +26,8 @@ public class JoinMeetingTask extends AsyncTask<Void, Void, String> {
     private OnJoinMeetingFinishedListener listener ;
     private String userId;
     private String meadleId;
-    private long lat;
-    private long lng;
+    private double lat;
+    private double lng;
 
     public JoinMeetingTask(String meadleId,UserLocation location,OnJoinMeetingFinishedListener listener){
         this.listener = listener;
@@ -53,6 +53,7 @@ public class JoinMeetingTask extends AsyncTask<Void, Void, String> {
         }catch(Exception e){
             e.printStackTrace();
         }
+        putRequest.setHeader("Content-type", "application/json");
         putRequest.setEntity(se);
         HttpResponse response = null;
         String jsonResp = null;

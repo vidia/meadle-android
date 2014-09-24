@@ -32,8 +32,8 @@ import edu.purdue.cs408.meadle.models.UserLocation;
 public class StartMeetingTask extends AsyncTask<Void, Void, String> {
     private OnStartMeetingFinishedListener listener ;
     private String userId;
-    private long lat;
-    private long lng;
+    private double lat;
+    private double lng;
     private Context c;
 
     public StartMeetingTask(UserLocation location,OnStartMeetingFinishedListener listener){
