@@ -11,9 +11,8 @@ import android.widget.EditText;
 import com.joanzapata.android.iconify.IconDrawable;
 import com.joanzapata.android.iconify.Iconify;
 
-import edu.purdue.cs408.meadle.Meadle;
+import edu.purdue.cs408.meadle.Constants;
 import edu.purdue.cs408.meadle.R;
-import edu.purdue.cs408.meadle.activities.MeadleActivity;
 
 
 public class NumberPadActivity extends MeadleActivity implements View.OnClickListener, View.OnLongClickListener {
@@ -41,13 +40,13 @@ public class NumberPadActivity extends MeadleActivity implements View.OnClickLis
         for(int res : numberButtonRes) {
             findViewById(res).setOnClickListener(this);
         }
-        findViewById(R.id.btn_delete).setOnClickListener(this);
+        findViewById(R.id.btn_num_pad_delete).setOnClickListener(this);
 
         typeView  = (EditText) findViewById(R.id.textBox);
 
         invalidateCheckButton();
 
-        findViewById(R.id.btn_delete).setOnLongClickListener(this);
+        findViewById(R.id.btn_num_pad_delete).setOnLongClickListener(this);
     }
 
 
@@ -104,7 +103,7 @@ public class NumberPadActivity extends MeadleActivity implements View.OnClickLis
                 typeCharacter('9');
                 break;
 
-            case R.id.btn_delete:
+            case R.id.btn_num_pad_delete:
                 //TODO: Allow the back button to be spammed
                 typeCharacter((char)8); //delete
         }
@@ -113,7 +112,7 @@ public class NumberPadActivity extends MeadleActivity implements View.OnClickLis
     private void typeCharacter(char c) {
         char DELETE_KEY = (char) 8;
         if(c != DELETE_KEY) {
-            if(typeView.getText().length() < Meadle.CODE_LENGTH) {
+            if(typeView.getText().length() < Constants.MEADLE_CODE_LENGTH) {
                 typeView.getText().append(c);
                 invalidateCheckButton();
             }
@@ -130,7 +129,7 @@ public class NumberPadActivity extends MeadleActivity implements View.OnClickLis
 
     private void invalidateCheckButton() {
         int color;
-        if(typeView.getText().length() == Meadle.CODE_LENGTH)
+        if(typeView.getText().length() == Constants.MEADLE_CODE_LENGTH)
             color = R.color.purple;
         else
             color = android.R.color.darker_gray;
@@ -145,7 +144,7 @@ public class NumberPadActivity extends MeadleActivity implements View.OnClickLis
     @Override
     public boolean onLongClick(View v) {
         switch(v.getId()) {
-            case R.id.btn_delete:
+            case R.id.btn_num_pad_delete:
                 typeView.setText("");
                 invalidateCheckButton();
                 return true;
