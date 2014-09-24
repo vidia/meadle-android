@@ -1,6 +1,5 @@
 package edu.purdue.cs408.meadle.tests;
 
-import android.content.SharedPreferences;
 import android.test.InstrumentationTestCase;
 import android.util.Log;
 
@@ -15,13 +14,10 @@ import edu.purdue.cs408.meadle.tasks.GetMeetingTask;
 import edu.purdue.cs408.meadle.tasks.JoinMeetingTask;
 import edu.purdue.cs408.meadle.tasks.StartMeetingTask;
 
-import com.jayway.awaitility.Awaitility;
-import com.jayway.awaitility.Awaitility.*;
 
-import java.util.concurrent.Callable;
 import java.util.concurrent.CountDownLatch;
 
-import static com.jayway.awaitility.Awaitility.await;
+
 
 /**
  * Created by kyle on 9/23/14.
