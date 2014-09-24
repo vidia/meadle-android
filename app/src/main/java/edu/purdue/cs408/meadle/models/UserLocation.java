@@ -1,24 +1,24 @@
-package edu.purdue.cs408.meadle.structures;
+package edu.purdue.cs408.meadle.models;
 
 /**
  * Created by kyle on 9/20/14.
  */
 public class UserLocation {
     private String userId;
-    private long lat;
-    private long lng;
+    private double lat;
+    private double lng;
 
-    public UserLocation(String userId, long lat, long lng){
+    public UserLocation(String userId, double lat, double lng){
         this.userId = userId;
         this.lat = lat;
         this.lng = lng;
     }
 
-    public long getLat(){
+    public double getLat(){
         return lat;
     }
 
-    public long getLng(){
+    public double getLng(){
         return lng;
     }
 

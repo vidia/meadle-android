@@ -16,7 +16,7 @@ import java.io.IOException;
 
 import edu.purdue.cs408.meadle.Constants;
 import edu.purdue.cs408.meadle.interfaces.OnJoinMeetingFinishedListener;
-import edu.purdue.cs408.meadle.structures.UserLocation;
+import edu.purdue.cs408.meadle.models.UserLocation;
 
 /**
  * Created by kyle on 9/17/14.
@@ -26,8 +26,8 @@ public class JoinMeetingTask extends AsyncTask<Void, Void, String> {
     private OnJoinMeetingFinishedListener listener ;
     private String userId;
     private String meadleId;
-    private long lat;
-    private long lng;
+    private double lat;
+    private double lng;
 
     public JoinMeetingTask(String meadleId,UserLocation location,OnJoinMeetingFinishedListener listener){
         this.listener = listener;
@@ -53,6 +53,7 @@ public class JoinMeetingTask extends AsyncTask<Void, Void, String> {
         }catch(Exception e){
             e.printStackTrace();
         }
+        putRequest.setHeader("Content-type", "application/json");
         putRequest.setEntity(se);
         HttpResponse response = null;
         String jsonResp = null;
@@ -77,7 +78,7 @@ public class JoinMeetingTask extends AsyncTask<Void, Void, String> {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            listener.OnJoinMeetingFinished(jsonObject);
+            listener.onJoinMeetingFinished(jsonObject);
 
         }
 

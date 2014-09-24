@@ -66,7 +66,7 @@ public class GetMeetingTask extends AsyncTask<Void, Void, String> {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            listener.OnGetMeetingFinished(jsonObject);
+            listener.onGetMeetingFinished(jsonObject);
 
         }
 
