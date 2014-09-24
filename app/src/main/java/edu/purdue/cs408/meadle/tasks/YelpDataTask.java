@@ -3,16 +3,9 @@ package edu.purdue.cs408.meadle.tasks;
 import android.content.Context;
 import android.os.AsyncTask;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.util.EntityUtils;
 import org.json.JSONObject;
 
-import java.net.URL;
 import java.util.ArrayList;
-
 import edu.purdue.cs408.meadle.interfaces.OnYelpDataTaskFinishedListener;
 import edu.purdue.cs408.meadle.models.YelpLocation;
 import edu.purdue.cs408.meadle.util.yelp.YelpAPI;
@@ -35,7 +28,7 @@ public class YelpDataTask extends AsyncTask<String, Integer, ArrayList<YelpLocat
 
         for (int i = 0; i < count; i++) {
             String id = ids[i];
-            JSONObject jsonResp = null;
+            JSONObject jsonResp;
 
             try {
                 String res = YelpAPI.getInstance().searchByBusinessId(id);
@@ -58,5 +51,20 @@ public class YelpDataTask extends AsyncTask<String, Integer, ArrayList<YelpLocat
         if(listener != null) {
             listener.OnYelpDataTaskFinished(locations);
         }
+    }
+
+    static class Echo implements OnYelpDataTaskFinishedListener {
+
+        @Override
+        public void OnYelpDataTaskFinished(ArrayList<YelpLocation> locations) {
+            for(YelpLocation l : locations) {
+                System.out.println(l.name);
+            }
+        }
+    }
+
+    public static void test1() {
+        YelpDataTask task = new YelpDataTask(new Echo());
+        task.execute("dt-kirbys-lafayette-2");
     }
 }

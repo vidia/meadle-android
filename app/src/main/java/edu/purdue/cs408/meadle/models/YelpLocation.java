@@ -16,12 +16,13 @@ public class YelpLocation {
     public JSONObject location;
 
     public YelpLocation(JSONObject location) throws Exception {
-        name = location.getString("name");
-        image_url = location.getString("image_url");
-        shortDescription = location.getString("snippet_text");
-        JSONArray categories = location.getJSONArray("categories");
-        for (int i = 0; i < categories.length(); i++) {
-            JSONArray row = categories.getJSONArray(i);
+        this.name = location.getString("name");
+        this.image_url = location.getString("image_url");
+        this.shortDescription = location.getString("snippet_text");
+        this.categories = new ArrayList<String>();
+        JSONArray yelpCategories = location.getJSONArray("categories");
+        for (int i = 0; i < yelpCategories.length(); i++) {
+            JSONArray row = yelpCategories.getJSONArray(i);
             this.categories.add(row.getString(0));
         }
         this.location = location.getJSONObject("location");
