@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import edu.purdue.cs408.meadle.tasks.YelpDataTask;
+
 
 public class WaitingActivity extends MeadleActivity {
 

@@ -9,6 +9,7 @@ import java.util.ArrayList;
  * Created by jeremy on 9/18/14.
  */
 public class YelpLocation {
+    public String id;
     public String name;
     public String image_url;
     public String shortDescription;
@@ -16,18 +17,21 @@ public class YelpLocation {
     public JSONObject location;
 
     public YelpLocation(JSONObject location) throws Exception {
-        name = location.getString("name");
-        image_url = location.getString("image_url");
-        shortDescription = location.getString("snippet_text");
-        JSONArray categories = location.getJSONArray("categories");
-
-        this.categories = new ArrayList<String>();
-
-        for (int i = 0; i < categories.length(); i++) {
-            JSONArray row = categories.getJSONArray(i);
-            this.categories.add(row.getString(0));
+        try {
+            this.id = location.getString("id");
+            this.name = location.getString("name");
+            this.image_url = location.has("image_url") ? location.getString("image_url") : null;
+            this.shortDescription = location.getString("snippet_text");
+            this.categories = new ArrayList<String>();
+            JSONArray yelpCategories = location.getJSONArray("categories");
+            for (int i = 0; i < yelpCategories.length(); i++) {
+                JSONArray row = yelpCategories.getJSONArray(i);
+                this.categories.add(row.getString(0));
+            }
+            this.location = location.getJSONObject("location");
+        } catch (org.json.JSONException e) {
+            System.err.println("Incorrect YelpLocation schema: " + e.getMessage());
         }
-        this.location = location.getJSONObject("location");
     }
 
     @Override

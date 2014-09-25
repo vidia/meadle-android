@@ -79,7 +79,7 @@ public class VoteFragment extends ListFragment implements OnYelpDataTaskFinished
     }
 
     @Override
-    public void OnYelpDataTaskFinished(ArrayList<YelpLocation> locations) {
+    public void onYelpDataTaskFinished(ArrayList<YelpLocation> locations) {
         BaseAdapter adapter = new YelpArrayAdapter(getActivity(), R.layout.yelp_list_item, R.id.list_row_draganddrop_textview, locations);
         AnimationAdapter animationAdapter = new SwingBottomInAnimationAdapter(adapter);
         animationAdapter.setAbsListView(getListView());

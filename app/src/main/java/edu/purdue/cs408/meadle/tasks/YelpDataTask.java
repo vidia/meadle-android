@@ -4,16 +4,9 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.util.EntityUtils;
 import org.json.JSONObject;
 
-import java.net.URL;
 import java.util.ArrayList;
-
 import edu.purdue.cs408.meadle.interfaces.OnYelpDataTaskFinishedListener;
 import edu.purdue.cs408.meadle.models.YelpLocation;
 import edu.purdue.cs408.meadle.util.yelp.YelpAPI;
@@ -36,7 +29,7 @@ public class YelpDataTask extends AsyncTask<String, Integer, ArrayList<YelpLocat
 
         for (int i = 0; i < count; i++) {
             String id = ids[i];
-            JSONObject jsonResp = null;
+            JSONObject jsonResp;
 
             try {
                 String res = YelpAPI.getInstance().searchByBusinessId(id);
@@ -60,7 +53,7 @@ public class YelpDataTask extends AsyncTask<String, Integer, ArrayList<YelpLocat
     @Override
     protected void onPostExecute(ArrayList<YelpLocation> locations) {
         if(listener != null) {
-            listener.OnYelpDataTaskFinished(locations);
+            listener.onYelpDataTaskFinished(locations);
         }
     }
 }
