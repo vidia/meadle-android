@@ -2,13 +2,23 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="edu.purdue.cs408.meadle" >
 
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+
+
+    <permission android:name="edu.purdue.cs408.meadle.C2D_MESSAGE"
+        android:protectionLevel="signature" />
+    <uses-permission android:name="edu.purdue.cs408.meadle.C2D_MESSAGE" />
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/logo_shadow"
         android:label="@string/app_name"
         android:theme="@style/MeadleTheme" >
         <activity
-            android:name=".MainActivity"
+            android:name=".activities.MainActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -27,16 +37,28 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".NumberPadActivity"
+            android:name=".activities.NumberPadActivity"
             android:label="@string/title_activity_number_pad"
-            android:parentActivityName=".MainActivity" >
+            android:parentActivityName=".activities.MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="edu.purdue.cs408.meadle.MainActivity" />
         </activity>
         <activity
-            android:name=".WaitingActivity"
-            android:label="@string/title_activity_waiting" >
+            android:name=".activities.VoteActivity"
+            android:label="@string/title_activity_vote" />
+
+        <activity
+            android:name=".activities.WaitingActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/title_activity_waiting"
+            android:theme="@style/FullscreenTheme" >
+            <intent-filter>
+                <data android:scheme="http" android:host="thatisa.link"/>
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <action android:name="android.intent.action.VIEW" />
+            </intent-filter>
         </activity>
     </application>
 

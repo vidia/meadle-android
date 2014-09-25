@@ -1,5 +1,6 @@
-package edu.purdue.cs408.meadle;
+package edu.purdue.cs408.meadle.activities;
 
+import edu.purdue.cs408.meadle.R;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;

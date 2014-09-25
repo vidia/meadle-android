@@ -6,7 +6,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="edu.purdue.cs408.meadle.NumberPadActivity">
+    tools:context="edu.purdue.cs408.meadle.activities.NumberPadActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -128,8 +128,9 @@
             style="@style/MeadleTheme.DeleteButtonStyle"
             >
             <ImageButton
-                android:id="@+id/btn_delete"
+                android:id="@+id/btn_num_pad_delete"
                 android:layout_centerInParent="true"
+                android:longClickable="true"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:scaleType="center"

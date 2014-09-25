@@ -1,4 +1,4 @@
-package edu.purdue.cs408.meadle;
+package edu.purdue.cs408.meadle.activities;
 
 import android.app.ActionBar;
 import android.app.Activity;
