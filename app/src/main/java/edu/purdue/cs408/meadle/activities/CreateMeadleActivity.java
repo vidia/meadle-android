@@ -2,15 +2,23 @@ package edu.purdue.cs408.meadle.activities;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.IntentSender;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesClient;
+import com.google.android.gms.location.LocationClient;
+
 import org.json.JSONObject;
 
 import edu.purdue.cs408.meadle.GcmManager;
+import edu.purdue.cs408.meadle.UserLocationManager;
 import edu.purdue.cs408.meadle.MeadleSharer;
 import edu.purdue.cs408.meadle.R;
 import edu.purdue.cs408.meadle.interfaces.GetGcmRegListener;
@@ -18,20 +26,38 @@ import edu.purdue.cs408.meadle.interfaces.OnStartMeetingFinishedListener;
 import edu.purdue.cs408.meadle.models.UserLocation;
 import edu.purdue.cs408.meadle.tasks.StartMeetingTask;
 
-public class CreateMeadleActivity extends Activity implements GetGcmRegListener, OnStartMeetingFinishedListener {
+public class CreateMeadleActivity extends Activity implements GetGcmRegListener, OnStartMeetingFinishedListener, GooglePlayServicesClient.ConnectionCallbacks, GooglePlayServicesClient.OnConnectionFailedListener {
+    public final String TAG = "CreateMeadleActivity";
+    private final static int
+            CONNECTION_FAILURE_RESOLUTION_REQUEST = 9000;
+    private LocationClient locationClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_meadle);
 
+        // Starting a meeting will begin once GPS has connected
+        locationClient = new LocationClient(this,this,this);
+        locationClient.connect();
 
-        // Get the GCM RegID, wait for listener to respond
-        GcmManager gcmManager = new GcmManager(this);
-        gcmManager.getRegID(this);
+
+
 
 
         //TODO: Call task to create meadle.
+    }
+
+
+
+    /*
+     * Called when the Activity is no longer visible.
+     */
+    @Override
+    protected void onStop() {
+        // Disconnecting the client invalidates it.
+        locationClient.disconnect();
+        super.onStop();
     }
 
 
@@ -68,7 +94,8 @@ public class CreateMeadleActivity extends Activity implements GetGcmRegListener,
      */
     @Override
     public void OnRegIdReceived(String regId) {
-        UserLocation location = new UserLocation(regId,100.29,89.05); //TODO: Create location.
+        Location l = locationClient.getLastLocation();
+        UserLocation location = new UserLocation(regId,l.getLatitude(),l.getLongitude()); //TODO: Create location.
         StartMeetingTask task = new StartMeetingTask(location,this);
         task.execute();
 
@@ -82,6 +109,50 @@ public class CreateMeadleActivity extends Activity implements GetGcmRegListener,
         //TODO: Save meadle ID into shared prefs.
 
 
+
+    }
+    /*
+            Once the GPS is connected, we should get the GCM RegId, so we know when the callback occurs the GPS can get
+            the location.
+     */
+    @Override
+    public void onConnected(Bundle bundle) {
+        Log.d(TAG,"GPS Connected");
+        // Get the GCM RegID, wait for listener to respond
+        GcmManager gcmManager = new GcmManager(this);
+        gcmManager.getRegID(this);
+
+    }
+
+    @Override
+    public void onDisconnected() {
+        Log.d(TAG,"GPS Disconnected");
+
+    }
+
+    @Override
+    public void onConnectionFailed(ConnectionResult connectionResult) {
+        if (connectionResult.hasResolution()) {
+            try {
+                // Start an Activity that tries to resolve the error
+                connectionResult.startResolutionForResult(
+                        this,
+                        CONNECTION_FAILURE_RESOLUTION_REQUEST);
+                /*
+                 * Thrown if Google Play services canceled the original
+                 * PendingIntent
+                 */
+            } catch (IntentSender.SendIntentException e) {
+                // Log the error
+                e.printStackTrace();
+            }
+        } else {
+            /*
+             * If no resolution is available, display a dialog to the
+             * user with the error.
+             */
+            Log.d(TAG, "Unrecoverable GPS error");
+        }
 
     }
 }
