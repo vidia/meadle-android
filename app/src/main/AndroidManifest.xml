@@ -50,9 +50,7 @@
 
         <activity
             android:name=".activities.WaitingActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/title_activity_waiting"
-            android:theme="@style/FullscreenTheme" >
+            android:label="@string/title_activity_waiting" >
             <intent-filter>
                 <data android:scheme="http" android:host="thatisa.link"/>
                 <category android:name="android.intent.category.DEFAULT" />

@@ -7,7 +7,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 
-public class WaitingActivity extends Activity {
+public class WaitingActivity extends MeadleActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
