@@ -2,14 +2,15 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="edu.purdue.cs408.meadle" >
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
 
-
-    <permission android:name="edu.purdue.cs408.meadle.C2D_MESSAGE"
+    <permission
+        android:name="edu.purdue.cs408.meadle.C2D_MESSAGE"
         android:protectionLevel="signature" />
+
     <uses-permission android:name="edu.purdue.cs408.meadle.C2D_MESSAGE" />
 
     <application
@@ -47,16 +48,27 @@
         <activity
             android:name=".activities.VoteActivity"
             android:label="@string/title_activity_vote" />
-
         <activity
             android:name=".activities.WaitingActivity"
             android:label="@string/title_activity_waiting" >
             <intent-filter>
-                <data android:scheme="http" android:host="thatisa.link"/>
+                <data
+                    android:host="thatisa.link"
+                    android:scheme="http" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
+
                 <action android:name="android.intent.action.VIEW" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".activities.CreateMeadleActivity"
+            android:label="@string/title_activity_create_meadle"
+            android:parentActivityName=".activities.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="edu.purdue.cs408.meadle.activities.MainActivity" />
         </activity>
     </application>
 

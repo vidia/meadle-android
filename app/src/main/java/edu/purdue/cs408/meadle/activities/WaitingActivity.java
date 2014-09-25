@@ -1,5 +1,6 @@
 package edu.purdue.cs408.meadle.activities;
 
+import edu.purdue.cs408.meadle.MeadleSharer;
 import edu.purdue.cs408.meadle.R;
 import android.app.Activity;
 import android.os.Bundle;
@@ -29,9 +30,16 @@ public class WaitingActivity extends MeadleActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_share) {
+
+            MeadleSharer.getInstance(this.getApplicationContext()).shareCurrentMeadle();
+
             return true;
         }
         return super.onOptionsItemSelected(item);
     }
+
+
+
+    //TODO: This should recieve a GCM notification
 }

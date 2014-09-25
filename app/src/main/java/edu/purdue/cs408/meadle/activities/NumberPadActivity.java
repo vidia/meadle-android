@@ -28,7 +28,7 @@ import edu.purdue.cs408.meadle.tasks.StartMeetingTask;
 
 
 
-public class NumberPadActivity extends MeadleActivity implements View.OnClickListener,View.OnLongClickListener,GetGcmRegListener,OnStartMeetingFinishedListener {
+public class NumberPadActivity extends MeadleActivity implements View.OnClickListener,View.OnLongClickListener {
     private static  final String TAG = "NumperPadActivity";
     private static final int[] numberButtonRes = new int[] {
             R.id.numberpad_0,
@@ -50,9 +50,6 @@ public class NumberPadActivity extends MeadleActivity implements View.OnClickLis
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_number_pad);
-        // Get the GCM RegID, wait for listener to respond
-        GcmManager gcmManager = new GcmManager(this);
-        gcmManager.getRegID(this);
 
         for(int res : numberButtonRes) {
             findViewById(res).setOnClickListener(this);
@@ -169,21 +166,5 @@ public class NumberPadActivity extends MeadleActivity implements View.OnClickLis
         return false;
     }
 
-     /*
-            Once we have received the gcm id we can now start a meeting
-      */
-    @Override
-    public void OnRegIdReceived(String regId) {
-        UserLocation location = new UserLocation(regId,100.29,89.05);
-        StartMeetingTask task = new StartMeetingTask(location,this);
-        task.execute();
 
-    }
-
-    @Override
-    public void onStartMeetingFinished(JSONObject jsonObject) {
-        Log.d(TAG,"OnStartMeetingFinsihed" + jsonObject.toString());
-
-
-    }
 }
