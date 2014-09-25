@@ -53,22 +53,7 @@ public class YelpDataTask extends AsyncTask<String, Integer, ArrayList<YelpLocat
     @Override
     protected void onPostExecute(ArrayList<YelpLocation> locations) {
         if(listener != null) {
-            listener.OnYelpDataTaskFinished(locations);
+            listener.onYelpDataTaskFinished(locations);
         }
-    }
-
-    static class Echo implements OnYelpDataTaskFinishedListener {
-
-        @Override
-        public void OnYelpDataTaskFinished(ArrayList<YelpLocation> locations) {
-            for(YelpLocation l : locations) {
-                System.out.println(l.name);
-            }
-        }
-    }
-
-    public static void test1() {
-        YelpDataTask task = new YelpDataTask(new Echo());
-        task.execute("dt-kirbys-lafayette-2");
     }
 }

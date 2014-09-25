@@ -15,7 +15,6 @@ public class WaitingActivity extends MeadleActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_waiting);
-        YelpDataTask.test1();
     }
 
 

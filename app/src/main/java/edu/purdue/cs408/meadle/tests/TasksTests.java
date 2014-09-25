@@ -9,12 +9,16 @@ import org.json.JSONObject;
 import edu.purdue.cs408.meadle.interfaces.OnGetMeetingFinishedListener;
 import edu.purdue.cs408.meadle.interfaces.OnJoinMeetingFinishedListener;
 import edu.purdue.cs408.meadle.interfaces.OnStartMeetingFinishedListener;
+import edu.purdue.cs408.meadle.interfaces.OnYelpDataTaskFinishedListener;
 import edu.purdue.cs408.meadle.models.UserLocation;
+import edu.purdue.cs408.meadle.models.YelpLocation;
 import edu.purdue.cs408.meadle.tasks.GetMeetingTask;
 import edu.purdue.cs408.meadle.tasks.JoinMeetingTask;
 import edu.purdue.cs408.meadle.tasks.StartMeetingTask;
+import edu.purdue.cs408.meadle.tasks.YelpDataTask;
 
 
+import java.util.ArrayList;
 import java.util.concurrent.CountDownLatch;
 
 
@@ -22,7 +26,7 @@ import java.util.concurrent.CountDownLatch;
 /**
  * Created by kyle on 9/23/14.
  */
-public class TasksTests extends InstrumentationTestCase implements OnStartMeetingFinishedListener,OnGetMeetingFinishedListener,OnJoinMeetingFinishedListener {
+public class TasksTests extends InstrumentationTestCase implements OnStartMeetingFinishedListener,OnGetMeetingFinishedListener,OnJoinMeetingFinishedListener,OnYelpDataTaskFinishedListener {
     CountDownLatch signal;
     private String mid;
 
@@ -81,6 +85,19 @@ public class TasksTests extends InstrumentationTestCase implements OnStartMeetin
         }
     }
 
+    public void test_YelpDataTaskShouldReturnCorrectData(){
+        signal = new CountDownLatch(1);
+        final YelpDataTask task = new YelpDataTask(this);
+        try{
+            runTestOnUiThread(new Runnable() {
+                @Override
+                public void run() { task.execute("dt-kirbys-lafayette-2");
+                }
+            });
+        } catch(Throwable throwable) {
+
+        }
+    }
 
     @Override
     public void onStartMeetingFinished(JSONObject jsonObject) {
@@ -120,6 +137,14 @@ public class TasksTests extends InstrumentationTestCase implements OnStartMeetin
     public void onJoinMeetingFinished(JSONObject jsonResp) {
         //assertNotNull(jsonResp);
         signal.countDown();
+    }
 
+    @Override
+    public void onYelpDataTaskFinished(ArrayList<YelpLocation> locations) {
+        assertNotNull(locations);
+        assertNotNull(locations.get(0));
+        assertNotNull(locations.get(0).name);
+        assert(locations.get(0).name.equals("DT Kirby's"));
+        signal.countDown();
     }
 }
