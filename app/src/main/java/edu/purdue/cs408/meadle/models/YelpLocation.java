@@ -27,4 +27,9 @@ public class YelpLocation {
         }
         this.location = location.getJSONObject("location");
     }
+
+    @Override
+    public String toString() {
+        return name;
+    }
 }

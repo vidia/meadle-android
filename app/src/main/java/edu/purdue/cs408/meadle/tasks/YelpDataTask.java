@@ -2,6 +2,7 @@ package edu.purdue.cs408.meadle.tasks;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import org.json.JSONObject;
 
@@ -32,6 +33,9 @@ public class YelpDataTask extends AsyncTask<String, Integer, ArrayList<YelpLocat
 
             try {
                 String res = YelpAPI.getInstance().searchByBusinessId(id);
+
+                Log.d("YELP", res);
+
                 jsonResp = new JSONObject(res);
                 locations.add(new YelpLocation(jsonResp));
             } catch(Exception e){
