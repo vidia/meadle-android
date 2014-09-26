@@ -53,18 +53,15 @@ public class MainActivity extends MeadleActivity {
     }
 
     public void openWaitingActivity() {
+        //TODO: Check if meadle is in shared prefs then run this method if exists.
         Intent intent = new Intent(this, WaitingActivity.class);
         startActivity(intent);
         return;
     }
 
     public void onShare(View view) {
-        Intent sendIntent = new Intent();
-        sendIntent.setAction(Intent.ACTION_SEND);
-        sendIntent.putExtra(Intent.EXTRA_SUBJECT, "Meadle Invitation");
-        sendIntent.putExtra(Intent.EXTRA_TEXT, "Join my Meadle! " + "http://www.meadle.me/CODE");
-        sendIntent.setType("text/plain");
-        startActivity(sendIntent);
+        Intent i = new Intent(this, CreateMeadleActivity.class);
+        startActivity(i);
     }
 
     public void onJoin(View view) {
