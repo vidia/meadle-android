@@ -35,7 +35,7 @@ public class GcmIntentService extends IntentService {
         if (!extras.isEmpty()) { // isEmpty() has effect of unparcelling Bundle.
             if(GoogleCloudMessaging.MESSAGE_TYPE_MESSAGE.equals(messageType)) {
                 // Post notification of received message
-                sendNotification("Received: " + extras.toString());
+                sendNotification(extras.getString("message"));
                 Log.i("GcmIntentService", "Received: " + extras.toString());
             } else {
                 // Error
@@ -53,7 +53,7 @@ public class GcmIntentService extends IntentService {
         PendingIntent contentIntent = PendingIntent.getActivity(this, 0, new Intent(this, WaitingActivity.class), 0);
 
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this)
-                .setSmallIcon(R.drawable.ic_launcher)
+                .setSmallIcon(R.drawable.logo_flat)
                 .setContentTitle("GCM Notification")
                 .setStyle(new NotificationCompat.BigTextStyle()
                 .bigText(msg))
