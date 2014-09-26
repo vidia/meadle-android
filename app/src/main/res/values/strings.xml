@@ -9,5 +9,7 @@
     <string name="title_activity_number_pad">Join Meadle</string>
     <string name="title_activity_vote">Pick your destination</string>
     <string name="title_activity_waiting">Waiting for your friends</string>
+    <string name="title_activity_create_meadle">CreateMeadleActivity</string>
+    <string name="hello_world">Hello world!</string>
 
 </resources>
