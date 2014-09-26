@@ -11,15 +11,19 @@
     tools:context="edu.purdue.cs408.meadle.activities.CreateMeadleActivity">
 
     <LinearLayout
+        android:visibility="gone"
         android:id="@+id/meadle_create_info"
         android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_gravity="center"
         android:layout_height="match_parent">
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:textColor="@color/purple"
+            android:gravity="center"
             android:textAppearance="?android:textAppearanceLarge"
             android:textSize="50sp"
             android:text="Your Meadle ID is..."
@@ -28,11 +32,12 @@
             />
 
         <TextView
-            android:id="@+id/textBox"
-            android:layout_width="wrap_content"
+            android:id="@+id/meadle_id"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:textColor="@color/purple"
+            android:gravity="center"
             android:textAppearance="?android:textAppearanceLarge"
             android:textSize="50sp"
             android:text="*********"

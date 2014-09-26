@@ -10,11 +10,13 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesClient;
 import com.google.android.gms.location.LocationClient;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import edu.purdue.cs408.meadle.GcmManager;
@@ -26,11 +28,12 @@ import edu.purdue.cs408.meadle.interfaces.OnStartMeetingFinishedListener;
 import edu.purdue.cs408.meadle.models.UserLocation;
 import edu.purdue.cs408.meadle.tasks.StartMeetingTask;
 
-public class CreateMeadleActivity extends Activity implements GetGcmRegListener, OnStartMeetingFinishedListener, GooglePlayServicesClient.ConnectionCallbacks, GooglePlayServicesClient.OnConnectionFailedListener {
+public class CreateMeadleActivity extends MeadleActivity implements GetGcmRegListener, OnStartMeetingFinishedListener, GooglePlayServicesClient.ConnectionCallbacks, GooglePlayServicesClient.OnConnectionFailedListener {
     public final String TAG = "CreateMeadleActivity";
     private final static int
             CONNECTION_FAILURE_RESOLUTION_REQUEST = 9000;
     private LocationClient locationClient;
+    private String meetingId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,11 +85,8 @@ public class CreateMeadleActivity extends Activity implements GetGcmRegListener,
 
     public void onShare(View view) {
 
-        MeadleSharer.getInstance(this.getApplicationContext()).shareCurrentMeadle();
+        MeadleSharer.getInstance(this).shareCurrentMeadle();
 
-
-        Intent waiting = new Intent(this, WaitingActivity.class);
-        startActivity(waiting);
     }
 
     /*
@@ -102,22 +102,42 @@ public class CreateMeadleActivity extends Activity implements GetGcmRegListener,
     }
 
     @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(requestCode == 123 && resultCode == RESULT_OK) {
+            Intent waiting = new Intent(this, WaitingActivity.class);
+            startActivity(waiting);
+        }
+    }
+
+    @Override
     public void onStartMeetingFinished(JSONObject jsonObject) {
         Log.d("CREATEMEETINGACTIVITY", "OnStartMeetingFinsihed" + jsonObject.toString());
 
         //TODO: Turn off progress bar and fill in meadle id text/share
         //TODO: Save meadle ID into shared prefs.
 
+        (findViewById(R.id.meadle_create_info)).setVisibility(View.VISIBLE);
+        (findViewById(R.id.progress)).setVisibility(View.GONE);
 
 
+        try {
+            meetingId = jsonObject.getString("meetingId");
+
+            MeadleDataManager.putMeadleId(this, meetingId);
+
+            ((TextView)findViewById(R.id.meadle_id)).setText(meetingId);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
+
     /*
             Once the GPS is connected, we should get the GCM RegId, so we know when the callback occurs the GPS can get
             the location.
      */
     @Override
     public void onConnected(Bundle bundle) {
-        Log.d(TAG,"GPS Connected");
+        Log.d(TAG, "GPS Connected");
         // Get the GCM RegID, wait for listener to respond
         GcmManager gcmManager = new GcmManager(this);
         gcmManager.getRegID(this);
@@ -126,7 +146,7 @@ public class CreateMeadleActivity extends Activity implements GetGcmRegListener,
 
     @Override
     public void onDisconnected() {
-        Log.d(TAG,"GPS Disconnected");
+        Log.d(TAG, "GPS Disconnected");
 
     }
 

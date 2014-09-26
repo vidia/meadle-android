@@ -32,7 +32,7 @@ public class WaitingActivity extends MeadleActivity {
         int id = item.getItemId();
         if (id == R.id.action_share) {
 
-            MeadleSharer.getInstance(this.getApplicationContext()).shareCurrentMeadle();
+            MeadleSharer.getInstance(this).shareCurrentMeadle();
 
             return true;
         }
