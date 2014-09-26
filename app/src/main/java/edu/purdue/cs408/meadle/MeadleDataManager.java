@@ -1,4 +1,4 @@
-package edu.purdue.cs408.meadle.activities;
+package edu.purdue.cs408.meadle;
 
 import android.content.Context;
 

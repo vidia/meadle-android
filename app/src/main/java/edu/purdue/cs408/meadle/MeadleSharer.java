@@ -3,8 +3,6 @@ package edu.purdue.cs408.meadle;
 import android.app.Activity;
 import android.content.Intent;
 
-import edu.purdue.cs408.meadle.activities.MeadleDataManager;
-
 /**
  * Created by david on 9/25/14.
  */

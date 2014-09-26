@@ -60,7 +60,7 @@
         </activity>
         <activity
             android:name=".activities.CreateMeadleActivity"
-            android:label="@string/title_activity_create_meadle"
+            android:label="Create a new Meadle"
             android:screenOrientation="portrait"
             android:parentActivityName=".activities.MainActivity" >
             <meta-data

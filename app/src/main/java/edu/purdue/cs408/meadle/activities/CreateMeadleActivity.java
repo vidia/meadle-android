@@ -1,10 +1,8 @@
 package edu.purdue.cs408.meadle.activities;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.location.Location;
-import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -20,7 +18,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import edu.purdue.cs408.meadle.GcmManager;
-import edu.purdue.cs408.meadle.UserLocationManager;
+import edu.purdue.cs408.meadle.MeadleDataManager;
 import edu.purdue.cs408.meadle.MeadleSharer;
 import edu.purdue.cs408.meadle.R;
 import edu.purdue.cs408.meadle.interfaces.GetGcmRegListener;
@@ -103,7 +101,7 @@ public class CreateMeadleActivity extends MeadleActivity implements GetGcmRegLis
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(requestCode == 123 && resultCode == RESULT_OK) {
+        if(requestCode == 123) {
             Intent waiting = new Intent(this, WaitingActivity.class);
             startActivity(waiting);
         }
