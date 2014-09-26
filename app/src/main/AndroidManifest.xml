@@ -90,6 +90,7 @@
                 <category android:name="edu.purdue.cs408.meadle" />
             </intent-filter>
         </receiver>
+        <service android:name=".GcmIntentService" />
     </application>
 
 </manifest>
