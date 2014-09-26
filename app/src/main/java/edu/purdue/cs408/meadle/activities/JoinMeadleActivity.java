@@ -96,6 +96,7 @@ public class JoinMeadleActivity extends MeadleActivity implements GooglePlayServ
     @Override
     public void onJoinMeetingFinished(JSONObject jsonResp) {
         Log.d(TAG,"OnJoinMeetingFinished json=" + jsonResp.toString());
+        onMeadleJoined();
 
     }
 }

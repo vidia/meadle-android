@@ -36,5 +36,6 @@ public class MeadleSharer {
         sendIntent.putExtra(Intent.EXTRA_TEXT, "Join my Meadle! " + "http://www.meadle.me/" + meadleId);
         sendIntent.setType("text/plain");
         activity.startActivityForResult(sendIntent, 123);
+
     }
 }
