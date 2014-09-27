@@ -19,6 +19,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.TimeZone;
+import java.util.UUID;
 import java.util.logging.ConsoleHandler;
 
 import edu.purdue.cs408.meadle.Constants;
@@ -62,7 +63,9 @@ public class StartMeetingTask extends AsyncTask<Void, Void, String> {
         StringEntity se = null;
 
         try {
-            jObject.put("userId", userId);
+            UUID uuid =  UUID.randomUUID();
+            jObject.put("userId", uuid.toString());
+            jObject.put("gcm",userId);
             jObject.put("lat",lat);
             jObject.put("lng",lng);
             jObject.put("datetime",datetime);
