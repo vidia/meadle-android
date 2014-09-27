@@ -14,8 +14,7 @@ import org.json.JSONObject;
 
 import java.util.List;
 
-import edu.purdue.cs408.meadle.GcmManager;
-import edu.purdue.cs408.meadle.MeadleSharer;
+import edu.purdue.cs408.meadle.util.manager.GcmManager;
 import edu.purdue.cs408.meadle.interfaces.GetGcmRegListener;
 import edu.purdue.cs408.meadle.interfaces.OnJoinMeetingFinishedListener;
 import edu.purdue.cs408.meadle.models.UserLocation;

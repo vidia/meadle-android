@@ -1,7 +1,9 @@
-package edu.purdue.cs408.meadle;
+package edu.purdue.cs408.meadle.util;
 
 import android.app.Activity;
 import android.content.Intent;
+
+import edu.purdue.cs408.meadle.util.manager.MeadleDataManager;
 
 /**
  * Created by david on 9/25/14.

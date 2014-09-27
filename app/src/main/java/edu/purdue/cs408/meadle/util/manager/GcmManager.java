@@ -1,4 +1,4 @@
-package edu.purdue.cs408.meadle;
+package edu.purdue.cs408.meadle.util.manager;
 
 import android.app.Activity;
 import android.content.Context;
@@ -13,6 +13,7 @@ import com.google.android.gms.gcm.GoogleCloudMessaging;
 
 import java.util.ArrayList;
 
+import edu.purdue.cs408.meadle.Constants;
 import edu.purdue.cs408.meadle.interfaces.GetGcmRegListener;
 import edu.purdue.cs408.meadle.interfaces.OnGetGcmRegIdTaskFinishedListener;
 import edu.purdue.cs408.meadle.tasks.GetGcmRegIdTask;
