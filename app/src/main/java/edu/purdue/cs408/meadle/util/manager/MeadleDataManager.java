@@ -67,9 +67,17 @@ public class MeadleDataManager {
         preferences(c).edit().putBoolean("waiting_result", true).commit();
     }
 
+    public static boolean isWaitingResult(Context c) {
+        return preferences(c).getBoolean("waiting_result", false);
+    }
+
     public static void setHaveResult(Context c) {
         preferences(c).edit().putBoolean("waiting_result", false).commit();
         preferences(c).edit().putBoolean("meadle_complete", true).commit();
+    }
+
+    public static boolean hasResult(Context c) {
+        return preferences(c).getBoolean("meadle_complete", false);
     }
 
     public static void clearCurrentMeadle(Context c) {
