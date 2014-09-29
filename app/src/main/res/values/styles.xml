@@ -7,6 +7,11 @@
         <item name="android:actionBarStyle">@style/MeadleTheme.ActionBarStyle</item>
     </style>
 
+    <style name="MeadleTheme.Splash" parent="MeadleTheme">
+        <item name="android:windowNoTitle">true</item>
+
+    </style>
+
     <style name="MeadleTheme.ActionBarStyle" parent="@android:style/Widget.Holo.Light.ActionBar">
         <item name="android:logo">@drawable/logo_flat</item>
         <item name="android:titleTextStyle">@style/MeadleTheme.ActionBar.TitleTextStyle</item>

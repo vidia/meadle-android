@@ -1,6 +1,5 @@
 package edu.purdue.cs408.meadle.activities;
 
-import android.nfc.Tag;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,20 +11,8 @@ import android.widget.EditText;
 import com.joanzapata.android.iconify.IconDrawable;
 import com.joanzapata.android.iconify.Iconify;
 
-import org.json.JSONObject;
-
 import edu.purdue.cs408.meadle.Constants;
 import edu.purdue.cs408.meadle.R;
-
-import edu.purdue.cs408.meadle.GcmManager;
-import edu.purdue.cs408.meadle.R;
-import edu.purdue.cs408.meadle.activities.MeadleActivity;
-import edu.purdue.cs408.meadle.interfaces.GetGcmRegListener;
-import edu.purdue.cs408.meadle.interfaces.OnStartMeetingFinishedListener;
-import edu.purdue.cs408.meadle.models.UserLocation;
-import edu.purdue.cs408.meadle.tasks.StartMeetingTask;
-
-
 
 
 public class NumberPadActivity extends MeadleActivity implements View.OnClickListener,View.OnLongClickListener {

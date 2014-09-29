@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="edu.purdue.cs408.meadle" >
-    <uses-permission android:name="android.permission.INTERNET" />
 
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
@@ -13,8 +13,8 @@
         android:protectionLevel="signature" />
 
     <uses-permission android:name="edu.purdue.cs408.meadle.C2D_MESSAGE" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
         android:allowBackup="true"
@@ -23,12 +23,9 @@
         android:theme="@style/MeadleTheme" >
         <activity
             android:name=".activities.MainActivity"
-            android:screenOrientation="portrait"
-            android:label="@string/app_name" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
+
             <intent-filter>
                 <data
                     android:host="meadle.me"
@@ -42,9 +39,9 @@
         </activity>
         <activity
             android:name=".activities.NumberPadActivity"
-            android:screenOrientation="portrait"
             android:label="@string/title_activity_number_pad"
-            android:parentActivityName=".activities.MainActivity" >
+            android:parentActivityName=".activities.MainActivity"
+            android:screenOrientation="portrait" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="edu.purdue.cs408.meadle.MainActivity" />
@@ -52,26 +49,25 @@
         <activity
             android:name=".activities.VoteActivity"
             android:screenOrientation="portrait"
-            android:launchMode="singleTask"
             android:label="@string/title_activity_vote" />
         <activity
             android:name=".activities.WaitingActivity"
-            android:screenOrientation="portrait"
-            android:label="@string/title_activity_waiting" >
+            android:label="@string/title_activity_waiting"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name=".activities.CreateMeadleActivity"
             android:label="Create a new Meadle"
-            android:screenOrientation="portrait"
-            android:parentActivityName=".activities.MainActivity" >
+            android:parentActivityName=".activities.MainActivity"
+            android:screenOrientation="portrait" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="edu.purdue.cs408.meadle.activities.MainActivity" />
         </activity>
-
-        <activity android:name=".activities.JoinMeadleActivity"
+        <activity
+            android:name=".activities.JoinMeadleActivity"
             android:label="Join this Meadle"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <data
                     android:host="www.meadle.me"
@@ -83,15 +79,32 @@
                 <action android:name="android.intent.action.VIEW" />
             </intent-filter>
         </activity>
+
         <receiver
             android:name=".GcmBroadcastReceiver"
             android:permission="com.google.android.c2dm.permission.SEND" >
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+
                 <category android:name="edu.purdue.cs408.meadle" />
             </intent-filter>
         </receiver>
+
         <service android:name=".GcmIntentService" />
+
+        <activity
+            android:name=".activities.SplashActivity"
+            android:label="@string/title_activity_splash"
+            android:theme="@style/MeadleTheme.Splash">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name=".activities.ResultsActivity"
+            android:label="Your destination" />
     </application>
 
 </manifest>
