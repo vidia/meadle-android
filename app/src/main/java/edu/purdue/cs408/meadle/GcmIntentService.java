@@ -13,6 +13,7 @@ import com.google.android.gms.gcm.GoogleCloudMessaging;
 
 import edu.purdue.cs408.meadle.activities.VoteActivity;
 import edu.purdue.cs408.meadle.activities.WaitingActivity;
+import edu.purdue.cs408.meadle.util.manager.MeadleDataManager;
 
 /**
  * Created by etemplin on 9/25/14.
@@ -37,8 +38,20 @@ public class GcmIntentService extends IntentService {
         if (!extras.isEmpty()) { // isEmpty() has effect of unparcelling Bundle.
             if(GoogleCloudMessaging.MESSAGE_TYPE_MESSAGE.equals(messageType)) {
                 // Post notification of received message
-                sendNotification(extras.getString("message"));
+
                 Log.i("GcmIntentService", "Received: " + extras.toString());
+
+
+
+                MeadleDataManager.setMeadleDoneWaiting(this);
+                //TODO: If the state is waiting for users.
+                if(MeadleDataManager.isWaitingActivityActive()) {
+                    broadcastToWaitingActivity(intent, extras);
+                } else {
+                    sendNotification(extras.getString("phase"));
+                }
+
+
             } else {
                 // Error
                 Log.e("GcmIntentService", "Received: " + extras.toString());
@@ -46,26 +59,34 @@ public class GcmIntentService extends IntentService {
         }
         // Release the wake lock provided by the WakefulBroadcastReceiver.
         GcmBroadcastReceiver.completeWakefulIntent(intent);
+    }
 
-        //TODO: Do not start activity here.
-
-        Intent i = new Intent(this, VoteActivity.class);
-        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(i);
+    private void broadcastToWaitingActivity(Intent intent, Bundle extras) {
+        Intent i = new Intent("waiting_broadcast");
+        intent.putExtra("phase", extras.getString("phase"));
+        sendBroadcast(i);
     }
 
     // Put the message into a notificaiton and post if.
-    private void sendNotification(String msg) {
+    private void sendNotification(String phase) {
         mNotificationManager = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
 
         PendingIntent contentIntent = PendingIntent.getActivity(this, 0, new Intent(this, WaitingActivity.class), 0);
 
+        String title = "Something happened.";
+        if(phase.equals("USER_JOINED")) {
+            title = "A friend has joined your meadle";
+        }
+        //TODO: Add more of the phases here.
+
+
+
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this)
                 .setSmallIcon(R.drawable.logo_flat)
-                .setContentTitle("GCM Notification")
+                .setContentTitle("Meadle updates")
                 .setStyle(new NotificationCompat.BigTextStyle()
-                .bigText(msg))
-                .setContentText(msg);
+                .bigText(title))
+                .setContentText(title);
 
         mBuilder.setContentIntent(contentIntent);
         mNotificationManager.notify(NOTIFICATION_ID, mBuilder.build());

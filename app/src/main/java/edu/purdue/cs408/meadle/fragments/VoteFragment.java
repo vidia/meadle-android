@@ -26,8 +26,6 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-import edu.purdue.cs408.meadle.GcmManager;
-import edu.purdue.cs408.meadle.MeadleDataManager;
 import edu.purdue.cs408.meadle.R;
 import edu.purdue.cs408.meadle.adapters.YelpArrayAdapter;
 import edu.purdue.cs408.meadle.data.YelpTestData;
@@ -37,6 +35,8 @@ import edu.purdue.cs408.meadle.interfaces.OnYelpDataTaskFinishedListener;
 import edu.purdue.cs408.meadle.models.YelpLocation;
 import edu.purdue.cs408.meadle.tasks.GetMeetingTask;
 import edu.purdue.cs408.meadle.tasks.YelpDataTask;
+import edu.purdue.cs408.meadle.util.manager.GcmManager;
+import edu.purdue.cs408.meadle.util.manager.MeadleDataManager;
 
 /**
  * A placeholder fragment containing a simple view.

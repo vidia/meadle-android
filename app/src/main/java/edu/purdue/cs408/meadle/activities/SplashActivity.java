@@ -29,7 +29,7 @@ public class SplashActivity extends MeadleActivity {
         else if(MeadleDataManager.isMeadleWaiting(this)) {
             //Meadle is waiting on members to join.
 
-            extras.putString("waitingfor", "join");
+            extras.putString("waitingfor", "USER_JOINED");
             activity = WaitingActivity.class;
         } else if(MeadleDataManager.isMeadleVoting(this)) {
             //Current user is voting and has not submitted his/her votes.

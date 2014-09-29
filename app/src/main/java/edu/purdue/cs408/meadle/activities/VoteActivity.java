@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import edu.purdue.cs408.meadle.MeadleDataManager;
 import edu.purdue.cs408.meadle.R;
 import edu.purdue.cs408.meadle.fragments.VoteFragment;
 

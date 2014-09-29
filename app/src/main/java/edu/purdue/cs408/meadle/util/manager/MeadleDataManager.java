@@ -8,6 +8,16 @@ import android.content.SharedPreferences;
  */
 public class MeadleDataManager {
 
+    private static boolean WAITING_ACTIVVE = false;
+
+    public static void setWaitingActivityActive(boolean b) {
+        WAITING_ACTIVVE = b;
+    }
+
+    public static boolean isWaitingActivityActive() {
+        return WAITING_ACTIVVE;
+    }
+
     private static SharedPreferences preferences(Context c) {
         return c.getSharedPreferences("current_meadle", Context.MODE_PRIVATE);
     }
@@ -85,4 +95,8 @@ public class MeadleDataManager {
         preferences(c).edit().remove("meadleId").commit();
     }
 
+    public static void clear(Context c) {
+        preferences(c).edit().clear().commit();
+        WAITING_ACTIVVE = false;
+    }
 }
