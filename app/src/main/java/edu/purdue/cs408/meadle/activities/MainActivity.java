@@ -17,7 +17,7 @@ public class MainActivity extends MeadleActivity {
         super.onCreate(savedInstanceState);
         setTheme(R.style.MeadleTheme);
         GcmManager gcmManager = new GcmManager(this);
-         gcmManager.register();
+        gcmManager.register();
         setContentView(R.layout.activity_start);
     }
 
