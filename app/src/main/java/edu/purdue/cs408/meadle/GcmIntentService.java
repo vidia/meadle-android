@@ -11,6 +11,7 @@ import android.util.Log;
 
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 
+import edu.purdue.cs408.meadle.activities.VoteActivity;
 import edu.purdue.cs408.meadle.activities.WaitingActivity;
 
 /**
@@ -44,6 +45,9 @@ public class GcmIntentService extends IntentService {
         }
         // Release the wake lock provided by the WakefulBroadcastReceiver.
         GcmBroadcastReceiver.completeWakefulIntent(intent);
+        Intent i = new Intent(this, VoteActivity.class);
+        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(i);
     }
 
     // Put the message into a notificaiton and post if.

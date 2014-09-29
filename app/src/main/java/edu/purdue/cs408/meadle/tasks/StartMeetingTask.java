@@ -63,9 +63,7 @@ public class StartMeetingTask extends AsyncTask<Void, Void, String> {
         StringEntity se = null;
 
         try {
-            UUID uuid =  UUID.randomUUID();
-            jObject.put("userId", uuid.toString());
-            jObject.put("gcm",userId);
+            jObject.put("userId",userId);
             jObject.put("lat",lat);
             jObject.put("lng",lng);
             jObject.put("datetime",datetime);
