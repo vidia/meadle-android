@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import edu.purdue.cs408.meadle.MeadleDataManager;
 import edu.purdue.cs408.meadle.R;
 import edu.purdue.cs408.meadle.fragments.VoteFragment;
 
@@ -14,9 +15,13 @@ public class VoteActivity extends MeadleActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vote);
+        Bundle b = new Bundle();
+        b.putString("meetingId", MeadleDataManager.getMeadleId(this));
+        VoteFragment fragment = new VoteFragment();
+        fragment.setArguments(b);
         if (savedInstanceState == null) {
             getFragmentManager().beginTransaction()
-                    .add(R.id.container, new VoteFragment())
+                    .add(R.id.container, fragment)
                     .commit();
         }
     }

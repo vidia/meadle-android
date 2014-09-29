@@ -2,6 +2,7 @@ package edu.purdue.cs408.meadle.fragments;
 
 import android.app.ListFragment;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -19,27 +20,40 @@ import com.nhaarman.listviewanimations.appearance.simple.SwingBottomInAnimationA
 import com.nhaarman.listviewanimations.itemmanipulation.DynamicListView;
 import com.nhaarman.listviewanimations.itemmanipulation.dragdrop.TouchViewDraggableManager;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 
+import edu.purdue.cs408.meadle.GcmManager;
 import edu.purdue.cs408.meadle.R;
 import edu.purdue.cs408.meadle.adapters.YelpArrayAdapter;
 import edu.purdue.cs408.meadle.data.YelpTestData;
+import edu.purdue.cs408.meadle.interfaces.GetGcmRegListener;
+import edu.purdue.cs408.meadle.interfaces.OnGetMeetingFinishedListener;
 import edu.purdue.cs408.meadle.interfaces.OnYelpDataTaskFinishedListener;
 import edu.purdue.cs408.meadle.models.YelpLocation;
+import edu.purdue.cs408.meadle.tasks.GetMeetingTask;
 import edu.purdue.cs408.meadle.tasks.YelpDataTask;
 
 /**
  * A placeholder fragment containing a simple view.
  */
-public class VoteFragment extends ListFragment implements OnYelpDataTaskFinishedListener {
+public class VoteFragment extends ListFragment implements OnYelpDataTaskFinishedListener, OnGetMeetingFinishedListener,GetGcmRegListener {
+    private String meetingId;
 
     public VoteFragment() {
         setHasOptionsMenu(true);
     }
 
+
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
+        meetingId = getArguments().getString("meetingId");
         View rootView = inflater.inflate(R.layout.fragment_vote, container, false);
         return rootView;
     }
@@ -68,6 +82,10 @@ public class VoteFragment extends ListFragment implements OnYelpDataTaskFinished
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        GcmManager manager = new GcmManager(getActivity());
+        manager.getRegID(this);
+        /*
+
         new YelpDataTask(this).execute(YelpTestData.IDS);
 
 
@@ -76,6 +94,7 @@ public class VoteFragment extends ListFragment implements OnYelpDataTaskFinished
         listView.setDraggableManager(new TouchViewDraggableManager(R.id.list_row_draganddrop_touchview));
 //            listView.setOnItemMovedListener(new MyOnItemMovedListener(adapter));
 //            listView.setOnItemLongClickListener(new MyOnItemLongClickListener(listView));
+*/
     }
 
     @Override
@@ -84,5 +103,44 @@ public class VoteFragment extends ListFragment implements OnYelpDataTaskFinished
         AnimationAdapter animationAdapter = new SwingBottomInAnimationAdapter(adapter);
         animationAdapter.setAbsListView(getListView());
         getListView().setAdapter(animationAdapter);
+    }
+
+    @Override
+    public void onGetMeetingFinished(JSONObject jsonObject) {
+        Log.d("OnGetMeetingFinished", jsonObject.toString());
+        JSONArray topLocations = null;
+        try {
+                topLocations = jsonObject.getJSONArray("topLocations");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        String locations[] = new String[topLocations.length()];
+        for(int i=0; i<topLocations.length(); i++){
+            try {
+                locations[i] = (String) topLocations.get(i);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+
+        new YelpDataTask(this).execute(locations);
+
+
+        DynamicListView listView = (DynamicListView) getListView();
+        listView.enableDragAndDrop();
+        listView.setDraggableManager(new TouchViewDraggableManager(R.id.list_row_draganddrop_touchview));
+//            listView.setOnItemMovedListener(new MyOnItemMovedListener(adapter));
+//            listView.setOnItemLongClickListener(new MyOnItemLongClickListener(listView));
+
+
+    }
+
+    @Override
+    public void OnRegIdReceived(String regId) {
+        GetMeetingTask task = new GetMeetingTask(meetingId,regId,this);
+        task.execute();
+
     }
 }
