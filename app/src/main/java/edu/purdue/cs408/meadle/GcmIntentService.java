@@ -45,6 +45,9 @@ public class GcmIntentService extends IntentService {
         }
         // Release the wake lock provided by the WakefulBroadcastReceiver.
         GcmBroadcastReceiver.completeWakefulIntent(intent);
+
+        //TODO: Do not start activity here.
+
         Intent i = new Intent(this, VoteActivity.class);
         i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(i);
