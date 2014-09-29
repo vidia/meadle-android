@@ -15,13 +15,9 @@ public class VoteActivity extends MeadleActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vote);
-        Bundle b = new Bundle();
-        b.putString("meetingId", MeadleDataManager.getMeadleId(this));
-        VoteFragment fragment = new VoteFragment();
-        fragment.setArguments(b);
         if (savedInstanceState == null) {
             getFragmentManager().beginTransaction()
-                    .add(R.id.container, fragment)
+                    .add(R.id.container, new VoteFragment())
                     .commit();
         }
     }

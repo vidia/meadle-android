@@ -27,6 +27,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 import edu.purdue.cs408.meadle.GcmManager;
+import edu.purdue.cs408.meadle.MeadleDataManager;
 import edu.purdue.cs408.meadle.R;
 import edu.purdue.cs408.meadle.adapters.YelpArrayAdapter;
 import edu.purdue.cs408.meadle.data.YelpTestData;
@@ -41,7 +42,7 @@ import edu.purdue.cs408.meadle.tasks.YelpDataTask;
  * A placeholder fragment containing a simple view.
  */
 public class VoteFragment extends ListFragment implements OnYelpDataTaskFinishedListener, OnGetMeetingFinishedListener,GetGcmRegListener {
-    private String meetingId;
+
 
     public VoteFragment() {
         setHasOptionsMenu(true);
@@ -53,7 +54,6 @@ public class VoteFragment extends ListFragment implements OnYelpDataTaskFinished
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        meetingId = getArguments().getString("meetingId");
         View rootView = inflater.inflate(R.layout.fragment_vote, container, false);
         return rootView;
     }
@@ -84,7 +84,7 @@ public class VoteFragment extends ListFragment implements OnYelpDataTaskFinished
 
         GcmManager manager = new GcmManager(getActivity());
         manager.getRegID(this);
-        /*
+
 
         new YelpDataTask(this).execute(YelpTestData.IDS);
 
@@ -94,7 +94,7 @@ public class VoteFragment extends ListFragment implements OnYelpDataTaskFinished
         listView.setDraggableManager(new TouchViewDraggableManager(R.id.list_row_draganddrop_touchview));
 //            listView.setOnItemMovedListener(new MyOnItemMovedListener(adapter));
 //            listView.setOnItemLongClickListener(new MyOnItemLongClickListener(listView));
-*/
+
     }
 
     @Override
@@ -127,19 +127,11 @@ public class VoteFragment extends ListFragment implements OnYelpDataTaskFinished
 
         new YelpDataTask(this).execute(locations);
 
-
-        DynamicListView listView = (DynamicListView) getListView();
-        listView.enableDragAndDrop();
-        listView.setDraggableManager(new TouchViewDraggableManager(R.id.list_row_draganddrop_touchview));
-//            listView.setOnItemMovedListener(new MyOnItemMovedListener(adapter));
-//            listView.setOnItemLongClickListener(new MyOnItemLongClickListener(listView));
-
-
     }
 
     @Override
     public void OnRegIdReceived(String regId) {
-        GetMeetingTask task = new GetMeetingTask(meetingId,regId,this);
+        GetMeetingTask task = new GetMeetingTask(MeadleDataManager.getMeadleId(getActivity()),regId,this);
         task.execute();
 
     }
