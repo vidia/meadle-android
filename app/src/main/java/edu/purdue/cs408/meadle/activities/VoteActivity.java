@@ -1,6 +1,7 @@
 package edu.purdue.cs408.meadle.activities;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -13,6 +14,7 @@ public class VoteActivity extends MeadleActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.d("STATE", "Voting. Opened voting.");
         setContentView(R.layout.activity_vote);
         if (savedInstanceState == null) {
             getFragmentManager().beginTransaction()

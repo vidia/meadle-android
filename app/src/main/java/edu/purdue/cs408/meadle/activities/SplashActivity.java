@@ -3,6 +3,7 @@ package edu.purdue.cs408.meadle.activities;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import edu.purdue.cs408.meadle.R;
@@ -28,7 +29,6 @@ public class SplashActivity extends MeadleActivity {
         }
         else if(MeadleDataManager.isMeadleWaiting(this)) {
             //Meadle is waiting on members to join.
-
             extras.putString("waitingfor", "USER_JOINED");
             activity = WaitingActivity.class;
         } else if(MeadleDataManager.isMeadleVoting(this)) {
@@ -43,6 +43,8 @@ public class SplashActivity extends MeadleActivity {
             activity = ResultsActivity.class;
 
         }
+
+        Log.d("STATE", "From Splash: Opening activity " + activity.getName() );
 
         Intent intent = new Intent(this, activity);
         intent.putExtras(extras);

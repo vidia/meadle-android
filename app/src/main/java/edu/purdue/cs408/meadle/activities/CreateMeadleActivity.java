@@ -102,6 +102,7 @@ public class CreateMeadleActivity extends MeadleActivity implements GetGcmRegLis
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(requestCode == 123) {
+            Log.d("STATE", "Meadle created." );
             Intent waiting = new Intent(this, WaitingActivity.class);
             startActivity(waiting);
         }

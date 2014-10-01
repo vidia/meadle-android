@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -19,6 +20,7 @@ public class WaitingActivity extends MeadleActivity {
     private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
+            Log.d("STATE", "Waiting Activity recieved broadcast | " + intent.toString() );
             openNextActivity(intent);
         }
     };
@@ -27,8 +29,10 @@ public class WaitingActivity extends MeadleActivity {
         // Extract data included in the Intent
         String message = intent.getStringExtra("phase");
 
+        Log.d("STATE", "Waiting activity, phase is -> " + message );
         if(message != null) {
             if (message.equals("USER_JOINED")) { //TODO: This should be for ready to vote.
+                Log.d("STATE", "Waiting activity, USER JOINED" );
                 //Notification has been received that says all people have joined a meadle. Time to vote.
                 MeadleDataManager.setMeadleDoneWaiting(this);
                 MeadleDataManager.setMeadleVoting(this);
@@ -36,6 +40,7 @@ public class WaitingActivity extends MeadleActivity {
                 Intent i = new Intent(this, VoteActivity.class);
                 startActivity(i);
             } else if (message.equals("result")) { //TODO: Change this to the new "phase" value
+                Log.d("STATE", "Waiting activity. Meadle is ready" );
                 //Notification has been received that alerts meadle is complete
                 MeadleDataManager.setHaveResult(this);
 
@@ -54,6 +59,7 @@ public class WaitingActivity extends MeadleActivity {
         //When this activity is opened, it should decide which next activity to open. Using the openNextActivity function.
 
         if(getIntent() != null) {
+            Log.d("STATE", "Waiting activity, received with intent");
             openNextActivity(getIntent());
         }
     }

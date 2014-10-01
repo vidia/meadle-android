@@ -105,6 +105,9 @@
 
         <activity android:name=".activities.ResultsActivity"
             android:label="Your destination" />
+
+        <activity android:name=".activities.MeadleActivity" />
+
     </application>
 
 </manifest>
