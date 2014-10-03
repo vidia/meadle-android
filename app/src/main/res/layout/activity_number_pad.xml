@@ -15,7 +15,7 @@
         android:layout_above="@+id/numberpad" >
 
         <EditText
-            android:editable="false"
+            android:editable="true"
             android:id="@+id/textBox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -23,7 +23,11 @@
             android:textColor="@color/purple"
             android:textAppearance="?android:textAppearanceLarge"
             android:textSize="50sp"
-            />
+            android:clickable="false"
+            android:longClickable="true"
+            android:inputType="number"
+            android:cursorVisible="false"
+            android:textIsSelectable="true" />
 
     </RelativeLayout>
 
