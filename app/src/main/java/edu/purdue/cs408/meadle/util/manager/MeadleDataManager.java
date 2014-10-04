@@ -22,7 +22,6 @@ public class MeadleDataManager {
         return c.getSharedPreferences("current_meadle", Context.MODE_PRIVATE);
     }
 
-
     public static void putMeadleId(Context c, String meadleId) {
         preferences(c).edit().putString("meadleId", meadleId).commit();
     }
