@@ -17,7 +17,7 @@ public class MainActivity extends MeadleActivity {
         super.onCreate(savedInstanceState);
         setTheme(R.style.MeadleTheme);
         GcmManager gcmManager = new GcmManager(this);
-         gcmManager.register();
+        gcmManager.register();
         setContentView(R.layout.activity_start);
     }
 
@@ -26,7 +26,7 @@ public class MainActivity extends MeadleActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
-        return true;
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override
