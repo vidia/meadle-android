@@ -59,6 +59,7 @@ public class JoinMeadleActivity extends MeadleActivity implements GooglePlayServ
     }
 
     public void onMeadleJoined() {
+        Log.d("STATE", "Meadle joined" );
         Intent waiting = new Intent(this, WaitingActivity.class);
         startActivity(waiting);
     }

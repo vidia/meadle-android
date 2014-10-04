@@ -66,7 +66,7 @@ public class CreateMeadleActivity extends MeadleActivity implements GetGcmRegLis
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.create_meadle, menu);
-        return true;
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override
@@ -102,6 +102,7 @@ public class CreateMeadleActivity extends MeadleActivity implements GetGcmRegLis
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(requestCode == 123) {
+            Log.d("STATE", "Meadle created." );
             Intent waiting = new Intent(this, WaitingActivity.class);
             startActivity(waiting);
         }
