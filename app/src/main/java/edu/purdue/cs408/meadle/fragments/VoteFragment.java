@@ -2,6 +2,7 @@ package edu.purdue.cs408.meadle.fragments;
 
 import android.app.ListFragment;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -19,19 +20,24 @@ import com.nhaarman.listviewanimations.appearance.simple.SwingBottomInAnimationA
 import com.nhaarman.listviewanimations.itemmanipulation.DynamicListView;
 import com.nhaarman.listviewanimations.itemmanipulation.dragdrop.TouchViewDraggableManager;
 
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 
+import edu.purdue.cs408.meadle.Constants;
 import edu.purdue.cs408.meadle.R;
 import edu.purdue.cs408.meadle.adapters.YelpArrayAdapter;
 import edu.purdue.cs408.meadle.data.YelpTestData;
+import edu.purdue.cs408.meadle.interfaces.OnSendVoteFinishedListener;
 import edu.purdue.cs408.meadle.interfaces.OnYelpDataTaskFinishedListener;
 import edu.purdue.cs408.meadle.models.YelpLocation;
+import edu.purdue.cs408.meadle.tasks.SendVoteTask;
 import edu.purdue.cs408.meadle.tasks.YelpDataTask;
 
 /**
  * A placeholder fragment containing a simple view.
  */
-public class VoteFragment extends ListFragment implements OnYelpDataTaskFinishedListener {
+public class VoteFragment extends ListFragment implements OnYelpDataTaskFinishedListener, OnSendVoteFinishedListener {
 
     public VoteFragment() {
         setHasOptionsMenu(true);
@@ -58,6 +64,9 @@ public class VoteFragment extends ListFragment implements OnYelpDataTaskFinished
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()) {
             case R.id.action_confirm:
+                BaseAdapter baseAdapter = (BaseAdapter) getListView().getAdapter();
+                new SendVoteTask("meadleId", "userId", baseAdapter, this); //of course this is incorrect, need to get meetingID and userID.
+                // pass the adapter to the list to grab its first three elements in the task. test this later.
                 return true;
         }
         return false;
@@ -84,5 +93,10 @@ public class VoteFragment extends ListFragment implements OnYelpDataTaskFinished
         AnimationAdapter animationAdapter = new SwingBottomInAnimationAdapter(adapter);
         animationAdapter.setAbsListView(getListView());
         getListView().setAdapter(animationAdapter);
+    }
+
+    @Override
+    public void OnSendVoteFinishedListener(JSONObject jsonResp) {
+
     }
 }
