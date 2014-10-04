@@ -63,7 +63,8 @@ public class GcmIntentService extends IntentService {
 
     private void broadcastToWaitingActivity(Intent intent, Bundle extras) {
         Intent i = new Intent("waiting_broadcast");
-        intent.putExtra("phase", extras.getString("phase"));
+        //intent.putExtra("phase", extras.getString("phase"));
+       i.putExtras(extras);
         sendBroadcast(i);
     }
 
