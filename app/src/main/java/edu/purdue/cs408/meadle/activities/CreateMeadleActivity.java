@@ -17,9 +17,9 @@ import com.google.android.gms.location.LocationClient;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import edu.purdue.cs408.meadle.GcmManager;
-import edu.purdue.cs408.meadle.MeadleDataManager;
-import edu.purdue.cs408.meadle.MeadleSharer;
+import edu.purdue.cs408.meadle.util.manager.GcmManager;
+import edu.purdue.cs408.meadle.util.manager.MeadleDataManager;
+import edu.purdue.cs408.meadle.util.MeadleSharer;
 import edu.purdue.cs408.meadle.R;
 import edu.purdue.cs408.meadle.interfaces.GetGcmRegListener;
 import edu.purdue.cs408.meadle.interfaces.OnStartMeetingFinishedListener;
