@@ -79,8 +79,14 @@ public class SendVoteTask extends AsyncTask<Void, String, String> {
     @Override
     protected void onPostExecute(String result) {
         if(listener != null){
-            Log.d(TAG, "result="+result);
-            listener.OnSendVoteFinishedListener(result);
+            JSONObject jsonObject = null;
+            try {
+                jsonObject = new JSONObject(result);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            Log.d(TAG, jsonObject.toString());
+            listener.OnSendVoteFinishedListener(jsonObject);
 
         }
     }

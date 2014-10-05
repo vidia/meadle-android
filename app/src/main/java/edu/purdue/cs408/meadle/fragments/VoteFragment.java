@@ -102,7 +102,7 @@ public class VoteFragment extends ListFragment implements OnYelpDataTaskFinished
     }
 
     @Override
-    public void OnSendVoteFinishedListener(String resp) {
+    public void OnSendVoteFinishedListener(JSONObject jsonObject) {
 
     }
 

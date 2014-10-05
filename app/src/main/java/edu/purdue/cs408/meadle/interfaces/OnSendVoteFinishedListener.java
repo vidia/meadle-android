@@ -6,5 +6,5 @@ import org.json.JSONObject;
  * Created by tylorgarrett on 10/4/14.
  */
 public interface OnSendVoteFinishedListener {
-    public void OnSendVoteFinishedListener(String resp);
+    public void OnSendVoteFinishedListener(JSONObject jsonObject);
 }
