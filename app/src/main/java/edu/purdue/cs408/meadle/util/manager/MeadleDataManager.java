@@ -8,15 +8,72 @@ import android.content.SharedPreferences;
  */
 public class MeadleDataManager {
 
-    private static boolean WAITING_ACTIVVE = false;
+    private static boolean WAITING_ACTIVE = false;
 
     public static void setWaitingActivityActive(boolean b) {
-        WAITING_ACTIVVE = b;
+        WAITING_ACTIVE = b;
     }
 
     public static boolean isWaitingActivityActive() {
-        return WAITING_ACTIVVE;
+        return WAITING_ACTIVE;
     }
+
+
+    public enum MeadleState {
+        NONE,
+        WAITING,
+        VOTING,
+        WAITING_RESULT,
+        HAS_RESULT
+    }
+
+    public MeadleState getCurrentState(Context c) {
+
+        if( getMeadleId(c) == null ) {
+            return MeadleState.NONE;
+        } else if( isWaitingResult(c) ) {
+            return MeadleState.WAITING;
+        } else if( isMeadleVoting(c) ) {
+            return MeadleState.VOTING;
+        } else if( isWaitingResult(c) ) {
+            return MeadleState.WAITING_RESULT;
+        } else if( hasResult(c) ) {
+            return MeadleState.HAS_RESULT;
+        } else return MeadleState.NONE;
+
+    }
+
+    public void enterMeadleWaiting(Context c) {
+        if( getMeadleId(c) == null) throw new IllegalStateException("There must be a saved meadle to enter waiting");
+
+        if( getCurrentState(c) == MeadleState.NONE ) {
+            setMeadleWaiting(c);
+        } else throw new IllegalStateException("Cannot move to waiting from a state that is not NONE");
+    }
+
+    public void startVoting(Context c) {
+        if( getCurrentState(c) == MeadleState.WAITING ) {
+            setMeadleDoneWaiting(c);
+            setMeadleVoting(c);
+        } else throw new IllegalStateException("Cannot more to voting from state other than waiting");
+    }
+
+    public void startWaitingForResult(Context c) {
+        if( getCurrentState(c) == MeadleState.VOTING ) {
+            setMeadleDoneVoting(c);
+            setWaitingResult(c);
+        } else throw new IllegalStateException("Cannot more to voting from state other than voting");
+    }
+
+    public void setHasResult(Context c) {
+        if( getCurrentState(c) == MeadleState.WAITING_RESULT ) {
+            setHaveResult(c);
+        } else throw new IllegalStateException("Cannot more to voting from state other than waiting result");
+    }
+
+
+
+
 
     private static SharedPreferences preferences(Context c) {
         return c.getSharedPreferences("current_meadle", Context.MODE_PRIVATE);
@@ -48,44 +105,44 @@ public class MeadleDataManager {
         return allvotes.split("|");
     }
 
-    public static void setMeadleWaiting(Context c) {
+    private static void setMeadleWaiting(Context c) {
         preferences(c).edit().putBoolean("waiting", true).commit();
     }
 
-    public static void setMeadleDoneWaiting(Context c) {
+    private static void setMeadleDoneWaiting(Context c) {
         preferences(c).edit().putBoolean("waiting", false).commit();
     }
 
-    public static boolean isMeadleWaiting(Context c) {
+    private static boolean isMeadleWaiting(Context c) {
         return preferences(c).getBoolean("waiting", false);
     }
 
-    public static void setMeadleVoting(Context c) {
+    private static void setMeadleVoting(Context c) {
         preferences(c).edit().putBoolean("voting", true).commit();
     }
 
-    public static void setMeadleDoneVoting(Context c) {
+    private static void setMeadleDoneVoting(Context c) {
         preferences(c).edit().putBoolean("voting", true).commit();
     }
 
-    public static boolean isMeadleVoting(Context c) {
+    private static boolean isMeadleVoting(Context c) {
         return preferences(c).getBoolean("voting", false);
     }
 
-    public static void setWaitingResult(Context c) {
+    private static void setWaitingResult(Context c) {
         preferences(c).edit().putBoolean("waiting_result", true).commit();
     }
 
-    public static boolean isWaitingResult(Context c) {
+    private static boolean isWaitingResult(Context c) {
         return preferences(c).getBoolean("waiting_result", false);
     }
 
-    public static void setHaveResult(Context c) {
+    private static void setHaveResult(Context c) {
         preferences(c).edit().putBoolean("waiting_result", false).commit();
         preferences(c).edit().putBoolean("meadle_complete", true).commit();
     }
 
-    public static boolean hasResult(Context c) {
+    private static boolean hasResult(Context c) {
         return preferences(c).getBoolean("meadle_complete", false);
     }
 
@@ -96,6 +153,6 @@ public class MeadleDataManager {
 
     public static void clear(Context c) {
         preferences(c).edit().clear().commit();
-        WAITING_ACTIVVE = false;
+        WAITING_ACTIVE = false;
     }
 }
