@@ -23,24 +23,31 @@ import com.nhaarman.listviewanimations.itemmanipulation.dragdrop.TouchViewDragga
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import edu.purdue.cs408.meadle.Constants;
 import edu.purdue.cs408.meadle.R;
 import edu.purdue.cs408.meadle.adapters.YelpArrayAdapter;
 import edu.purdue.cs408.meadle.data.YelpTestData;
+import edu.purdue.cs408.meadle.interfaces.GetGcmRegListener;
 import edu.purdue.cs408.meadle.interfaces.OnSendVoteFinishedListener;
 import edu.purdue.cs408.meadle.interfaces.OnYelpDataTaskFinishedListener;
 import edu.purdue.cs408.meadle.models.YelpLocation;
 import edu.purdue.cs408.meadle.tasks.SendVoteTask;
 import edu.purdue.cs408.meadle.tasks.YelpDataTask;
+import edu.purdue.cs408.meadle.util.manager.GcmManager;
+import edu.purdue.cs408.meadle.util.manager.MeadleDataManager;
 
 /**
  * A placeholder fragment containing a simple view.
  */
-public class VoteFragment extends ListFragment implements OnYelpDataTaskFinishedListener, OnSendVoteFinishedListener {
+public class VoteFragment extends ListFragment implements OnYelpDataTaskFinishedListener, OnSendVoteFinishedListener,GetGcmRegListener {
+    private final static String TAG = "VoteFragment";
+
 
     public VoteFragment() {
         setHasOptionsMenu(true);
+
     }
 
     @Override
@@ -64,9 +71,8 @@ public class VoteFragment extends ListFragment implements OnYelpDataTaskFinished
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()) {
             case R.id.action_confirm:
-                BaseAdapter baseAdapter = (BaseAdapter) getListView().getAdapter();
-                new SendVoteTask("meadleId", "userId", baseAdapter, this); //of course this is incorrect, need to get meetingID and userID.
-                // pass the adapter to the list to grab its first three elements in the task. test this later.
+                GcmManager manager = new GcmManager(getActivity());
+                manager.getRegID(this);
                 return true;
         }
         return false;
@@ -96,7 +102,17 @@ public class VoteFragment extends ListFragment implements OnYelpDataTaskFinished
     }
 
     @Override
-    public void OnSendVoteFinishedListener(JSONObject jsonResp) {
+    public void OnSendVoteFinishedListener(String resp) {
+
+    }
+
+    @Override
+    public void OnRegIdReceived(String regId) {
+        AnimationAdapter animationAdapter = (AnimationAdapter) getListView().getAdapter();
+        YelpArrayAdapter adapter = (YelpArrayAdapter) animationAdapter.getDecoratedBaseAdapter();
+        List<YelpLocation> locationList = adapter.getLocations();
+        new SendVoteTask(MeadleDataManager.getMeadleId(getActivity()), regId, locationList, this).execute(); //of course this is incorrect, need to get meetingID and userID.
+        // pass the adapter to the list to grab its first three elements in the task. test this later.
 
     }
 }
