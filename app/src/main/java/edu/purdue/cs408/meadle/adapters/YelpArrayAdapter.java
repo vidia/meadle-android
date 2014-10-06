@@ -14,9 +14,11 @@ import edu.purdue.cs408.meadle.models.YelpLocation;
 /**
  * Created by david on 9/19/14.
  */
-public class YelpArrayAdapter extends StableArrayAdapter<YelpLocation> {
+public class  YelpArrayAdapter extends StableArrayAdapter<YelpLocation> {
+    private List<YelpLocation> data;
     public YelpArrayAdapter(Context context, int listItem, int textView, List<YelpLocation> data) {
         super(context, listItem, textView, data);
+        this.data = data;
     }
 
     @Override
@@ -28,5 +30,9 @@ public class YelpArrayAdapter extends StableArrayAdapter<YelpLocation> {
             image.setImageUrl(getItem(position).image_url);
 
         return convertView;
+    }
+
+    public List<YelpLocation> getLocations(){
+        return data;
     }
 }

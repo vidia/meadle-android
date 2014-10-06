@@ -20,20 +20,20 @@ import com.nhaarman.listviewanimations.appearance.simple.SwingBottomInAnimationA
 import com.nhaarman.listviewanimations.itemmanipulation.DynamicListView;
 import com.nhaarman.listviewanimations.itemmanipulation.dragdrop.TouchViewDraggableManager;
 
-import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
+import edu.purdue.cs408.meadle.Constants;
 import edu.purdue.cs408.meadle.R;
 import edu.purdue.cs408.meadle.adapters.YelpArrayAdapter;
 import edu.purdue.cs408.meadle.data.YelpTestData;
 import edu.purdue.cs408.meadle.interfaces.GetGcmRegListener;
-import edu.purdue.cs408.meadle.interfaces.OnGetMeetingFinishedListener;
+import edu.purdue.cs408.meadle.interfaces.OnSendVoteFinishedListener;
 import edu.purdue.cs408.meadle.interfaces.OnYelpDataTaskFinishedListener;
 import edu.purdue.cs408.meadle.models.YelpLocation;
-import edu.purdue.cs408.meadle.tasks.GetMeetingTask;
+import edu.purdue.cs408.meadle.tasks.SendVoteTask;
 import edu.purdue.cs408.meadle.tasks.YelpDataTask;
 import edu.purdue.cs408.meadle.util.manager.GcmManager;
 import edu.purdue.cs408.meadle.util.manager.MeadleDataManager;
@@ -41,19 +41,18 @@ import edu.purdue.cs408.meadle.util.manager.MeadleDataManager;
 /**
  * A placeholder fragment containing a simple view.
  */
-public class VoteFragment extends ListFragment implements OnYelpDataTaskFinishedListener, OnGetMeetingFinishedListener,GetGcmRegListener {
+public class VoteFragment extends ListFragment implements OnYelpDataTaskFinishedListener, OnSendVoteFinishedListener,GetGcmRegListener {
+    private final static String TAG = "VoteFragment";
 
 
     public VoteFragment() {
         setHasOptionsMenu(true);
+
     }
-
-
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
+                             Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_vote, container, false);
         return rootView;
     }
@@ -72,6 +71,8 @@ public class VoteFragment extends ListFragment implements OnYelpDataTaskFinished
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()) {
             case R.id.action_confirm:
+                GcmManager manager = new GcmManager(getActivity());
+                manager.getRegID(this);
                 return true;
         }
         return false;
@@ -82,10 +83,6 @@ public class VoteFragment extends ListFragment implements OnYelpDataTaskFinished
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        GcmManager manager = new GcmManager(getActivity());
-        manager.getRegID(this);
-
-
         new YelpDataTask(this).execute(YelpTestData.IDS);
 
 
@@ -94,7 +91,6 @@ public class VoteFragment extends ListFragment implements OnYelpDataTaskFinished
         listView.setDraggableManager(new TouchViewDraggableManager(R.id.list_row_draganddrop_touchview));
 //            listView.setOnItemMovedListener(new MyOnItemMovedListener(adapter));
 //            listView.setOnItemLongClickListener(new MyOnItemLongClickListener(listView));
-
     }
 
     @Override
@@ -106,33 +102,17 @@ public class VoteFragment extends ListFragment implements OnYelpDataTaskFinished
     }
 
     @Override
-    public void onGetMeetingFinished(JSONObject jsonObject) {
-        Log.d("OnGetMeetingFinished", jsonObject.toString());
-        JSONArray topLocations = null;
-        try {
-                topLocations = jsonObject.getJSONArray("topLocations");
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        String locations[] = new String[topLocations.length()];
-        for(int i=0; i<topLocations.length(); i++){
-            try {
-                locations[i] = (String) topLocations.get(i);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
-
-
-        new YelpDataTask(this).execute(locations);
+    public void OnSendVoteFinishedListener(JSONObject jsonObject) {
 
     }
 
     @Override
     public void OnRegIdReceived(String regId) {
-        GetMeetingTask task = new GetMeetingTask(MeadleDataManager.getMeadleId(getActivity()),regId,this);
-        task.execute();
+        AnimationAdapter animationAdapter = (AnimationAdapter) getListView().getAdapter();
+        YelpArrayAdapter adapter = (YelpArrayAdapter) animationAdapter.getDecoratedBaseAdapter();
+        List<YelpLocation> locationList = adapter.getLocations();
+        new SendVoteTask(MeadleDataManager.getMeadleId(getActivity()), regId, locationList, this).execute(); //of course this is incorrect, need to get meetingID and userID.
+        // pass the adapter to the list to grab its first three elements in the task. test this later.
 
     }
 }
