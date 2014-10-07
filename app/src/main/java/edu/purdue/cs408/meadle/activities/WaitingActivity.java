@@ -47,6 +47,11 @@ public class WaitingActivity extends MeadleActivity {
 
                 Intent i = new Intent(this, ResultsActivity.class);
                 startActivity(i);
+            } else if(message.equals("VOTING_FINISHED")){
+                Log.d("Votiing Finsihed",intent.getExtras().toString());
+                Intent i = new Intent(this,MeetingPointActivity.class);
+                i.putExtras(intent.getExtras());
+                startActivity(i);
             }
         }
     }

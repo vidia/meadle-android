@@ -43,6 +43,9 @@ public class GcmIntentService extends IntentService {
 
 
 
+
+
+
                 MeadleDataManager.setMeadleDoneWaiting(this);
                 //TODO: If the state is waiting for users.
                 if(MeadleDataManager.isWaitingActivityActive()) {
@@ -67,6 +70,8 @@ public class GcmIntentService extends IntentService {
        i.putExtras(extras);
         sendBroadcast(i);
     }
+
+
 
     // Put the message into a notificaiton and post if.
     private void sendNotification(String phase) {
