@@ -69,8 +69,7 @@ public class MeetingPointActivity extends MeadleActivity implements OnYelpDataTa
         TextView tv  = (TextView)findViewById(R.id.meetingPointTextView);
         tv.setText(location.name);
 
-        SmartImageView imageView = (SmartImageView) findViewById(R.id.meeting_point_image_view);
-        imageView.setImageUrl(location.image_url);
+
 
         JSONObject jLocation = location.location;
         JSONArray displayAddress = null;
@@ -82,8 +81,6 @@ public class MeetingPointActivity extends MeadleActivity implements OnYelpDataTa
 
         Log.d(TAG,displayAddress.toString());
 
-        TextView meetingPointLocationStreetTextView = (TextView) findViewById(R.id.meetingPointLocationStreetTextView);
-        TextView meetingPointLocationCityTextView = (TextView)findViewById(R.id.meetingPointLocationCityTextView);
 
         String street = null;
         String city = null;
@@ -94,8 +91,29 @@ public class MeetingPointActivity extends MeadleActivity implements OnYelpDataTa
             e.printStackTrace();
         }
 
-        meetingPointLocationCityTextView.setText(city);
-        //meetingPointLocationStreetTextView.setText(street);
+        TextView addressTextView = (TextView) findViewById(R.id.meeting_point_address_text_view);
+        addressTextView.setText(street+ " " + city);
+
+
+
+        double lat = 0;
+        double lng = 0;
+
+        try {
+            JSONObject coordinates = jLocation.getJSONObject("coordinate");
+            lat = coordinates.getDouble("latitude");
+            lng = coordinates.getDouble("longitude");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
+        String url = "http://maps.google.com/maps/api/staticmap?center=" + lat + "," + lng + "&zoom=16&scale=2&size=800x500&maptype=roadmap"+"&markers=color:blue%7C"+lat+","+lng;
+        //Log.d("url",url);
+
+        SmartImageView imageView = (SmartImageView) findViewById(R.id.meeting_point_map_image_view);
+        imageView.setImageUrl(url);
+
 
 
     }

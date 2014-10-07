@@ -16,14 +16,7 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:id="@+id/linearLayout">
-        <com.loopj.android.image.SmartImageView
-            android:id="@+id/meeting_point_image_view"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:src="@drawable/yelp_icon"
-            android:layout_gravity="center_horizontal" />
-    </LinearLayout>
+        android:id="@+id/linearLayout"></LinearLayout>
 
     <TextView
         android:layout_width="wrap_content"
@@ -39,37 +32,37 @@
         android:layout_below="@+id/linearLayout"
         android:layout_centerHorizontal="true" />
 
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Location:"
-        android:shadowColor="#22000000"
-        android:shadowDx="3"
-        android:shadowDy="3"
-        android:shadowRadius="1"
-        android:textSize="30sp"
-        android:textColor="@color/purple"
-        android:id="@+id/meetingPointLocationStreetTextView"
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_alignParentBottom="true"
+        android:id="@+id/map_and_address_rel_layout"
         android:layout_below="@+id/meetingPointTextView"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="54dp" />
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Location:"
-        android:shadowColor="#22000000"
-        android:shadowDx="3"
-        android:shadowDy="3"
-        android:shadowRadius="1"
-        android:textSize="30sp"
-        android:textColor="@color/purple"
-        android:id="@+id/meetingPointLocationCityTextView"
-        android:layout_centerVertical="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        <com.loopj.android.image.SmartImageView
+            android:id="@+id/meeting_point_map_image_view"
+            android:layout_width="wrap_content"
+            android:src="@drawable/staticmap"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginBottom="187dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:id="@+id/meeting_point_address_text_view"
+            android:text='"Hi"'
+            android:layout_marginBottom="108dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true" />
+
+    </RelativeLayout>
 
 
 </RelativeLayout>

@@ -1,5 +1,7 @@
 package edu.purdue.cs408.meadle.models;
 
+import android.util.Log;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -15,9 +17,13 @@ public class YelpLocation {
     public String shortDescription;
     public ArrayList<String> categories;
     public JSONObject location;
+    public JSONObject yelpObject;
+    public Double lat;
+    public Double lng;
 
     public YelpLocation(JSONObject location) throws Exception {
         try {
+            this.yelpObject = location;
             this.id = location.getString("id");
             this.name = location.getString("name");
             this.image_url = location.has("image_url") ? location.getString("image_url") : null;
