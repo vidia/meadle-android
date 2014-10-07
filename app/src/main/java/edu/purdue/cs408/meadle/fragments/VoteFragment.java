@@ -54,7 +54,7 @@ import edu.purdue.cs408.meadle.util.manager.MeadleDataManager;
 /**
  * A placeholder fragment containing a simple view.
  */
-public class VoteFragment extends Fragment implements OnYelpDataTaskFinishedListener, OnSendVoteFinishedListener,GetGcmRegListener, OnGetMeetingFinishedListener {
+public class VoteFragment extends ListFragment implements OnYelpDataTaskFinishedListener, OnSendVoteFinishedListener,GetGcmRegListener, OnGetMeetingFinishedListener {
     private final static String TAG = "VoteFragment";
     private String regId;
 
@@ -112,7 +112,7 @@ public class VoteFragment extends Fragment implements OnYelpDataTaskFinishedList
 
     @Override
     public void onYelpDataTaskFinished(ArrayList<YelpLocation> locations) {
-        DynList listView = (DynList) getActivity().findViewById(R.id.listview);
+        DynList listView = (DynList) getListView();
 
        StableArrayAdapter adapter = new YelpArrayAdapter(getActivity(), R.layout.yelp_list_item, locations);
        // AnimationAdapter animationAdapter = new SwingBottomInAnimationAdapter(adapter);
@@ -142,7 +142,7 @@ public class VoteFragment extends Fragment implements OnYelpDataTaskFinishedList
     }
 
     public void sendVote(){
-        DynList listView = (DynList) getActivity().findViewById(R.id.listview);
+        DynList listView = (DynList) getListView();
         //YelpArrayAdapter adapter = (YelpArrayAdapter) listView.getAdapter();
 
 
@@ -164,7 +164,7 @@ public class VoteFragment extends Fragment implements OnYelpDataTaskFinishedList
         }
 
         String locations[] = new String[topLocations.length()];
-        for(int i=0; i<7; i++){
+        for(int i=0; i<locations.length; i++){
             try {
                 locations[i] = (String) topLocations.get(i);
             } catch (JSONException e) {
