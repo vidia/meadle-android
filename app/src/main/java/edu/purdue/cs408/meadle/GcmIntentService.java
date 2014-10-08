@@ -43,7 +43,7 @@ public class GcmIntentService extends IntentService {
 
 
 
-                MeadleDataManager.setMeadleDoneWaiting(this);
+                MeadleDataManager.startVoting(this);
                 //TODO: If the state is waiting for users.
                 if(MeadleDataManager.isWaitingActivityActive()) {
                     broadcastToWaitingActivity(intent, extras);
@@ -63,7 +63,7 @@ public class GcmIntentService extends IntentService {
 
     private void broadcastToWaitingActivity(Intent intent, Bundle extras) {
         Intent i = new Intent("waiting_broadcast");
-        intent.putExtra("phase", extras.getString("phase"));
+        i.putExtra("phase", extras.getString("phase"));
         sendBroadcast(i);
     }
 

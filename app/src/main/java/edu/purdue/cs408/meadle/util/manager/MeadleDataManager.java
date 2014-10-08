@@ -19,7 +19,7 @@ public class MeadleDataManager {
     }
 
 
-    public enum MeadleState {
+    public static enum MeadleState {
         NONE,
         WAITING,
         VOTING,
@@ -27,7 +27,7 @@ public class MeadleDataManager {
         HAS_RESULT
     }
 
-    public MeadleState getCurrentState(Context c) {
+    public static MeadleState getCurrentState(Context c) {
 
         if( getMeadleId(c) == null ) {
             return MeadleState.NONE;
@@ -43,7 +43,7 @@ public class MeadleDataManager {
 
     }
 
-    public void enterMeadleWaiting(Context c) {
+    public static void enterMeadleWaiting(Context c) {
         if( getMeadleId(c) == null) throw new IllegalStateException("There must be a saved meadle to enter waiting");
 
         if( getCurrentState(c) == MeadleState.NONE ) {
@@ -51,21 +51,21 @@ public class MeadleDataManager {
         } else throw new IllegalStateException("Cannot move to waiting from a state that is not NONE");
     }
 
-    public void startVoting(Context c) {
+    public static void startVoting(Context c) {
         if( getCurrentState(c) == MeadleState.WAITING ) {
             setMeadleDoneWaiting(c);
             setMeadleVoting(c);
         } else throw new IllegalStateException("Cannot more to voting from state other than waiting");
     }
 
-    public void startWaitingForResult(Context c) {
+    public static void startWaitingForResult(Context c) {
         if( getCurrentState(c) == MeadleState.VOTING ) {
             setMeadleDoneVoting(c);
             setWaitingResult(c);
         } else throw new IllegalStateException("Cannot more to voting from state other than voting");
     }
 
-    public void setHasResult(Context c) {
+    public static void setHasResult(Context c) {
         if( getCurrentState(c) == MeadleState.WAITING_RESULT ) {
             setHaveResult(c);
         } else throw new IllegalStateException("Cannot more to voting from state other than waiting result");

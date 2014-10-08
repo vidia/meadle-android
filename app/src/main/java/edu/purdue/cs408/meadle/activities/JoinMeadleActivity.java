@@ -19,6 +19,7 @@ import edu.purdue.cs408.meadle.interfaces.GetGcmRegListener;
 import edu.purdue.cs408.meadle.interfaces.OnJoinMeetingFinishedListener;
 import edu.purdue.cs408.meadle.models.UserLocation;
 import edu.purdue.cs408.meadle.tasks.JoinMeetingTask;
+import edu.purdue.cs408.meadle.util.manager.MeadleDataManager;
 
 /**
  * Created by david on 9/25/14.
@@ -60,6 +61,7 @@ public class JoinMeadleActivity extends MeadleActivity implements GooglePlayServ
 
     public void onMeadleJoined() {
         Log.d("STATE", "Meadle joined" );
+        MeadleDataManager.enterMeadleWaiting(this);
         Intent waiting = new Intent(this, WaitingActivity.class);
         startActivity(waiting);
     }

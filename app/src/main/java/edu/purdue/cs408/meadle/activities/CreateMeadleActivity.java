@@ -26,7 +26,8 @@ import edu.purdue.cs408.meadle.interfaces.OnStartMeetingFinishedListener;
 import edu.purdue.cs408.meadle.models.UserLocation;
 import edu.purdue.cs408.meadle.tasks.StartMeetingTask;
 
-public class CreateMeadleActivity extends MeadleActivity implements GetGcmRegListener, OnStartMeetingFinishedListener, GooglePlayServicesClient.ConnectionCallbacks, GooglePlayServicesClient.OnConnectionFailedListener {
+public class CreateMeadleActivity extends MeadleActivity implements GetGcmRegListener, OnStartMeetingFinishedListener,
+        GooglePlayServicesClient.ConnectionCallbacks, GooglePlayServicesClient.OnConnectionFailedListener {
     public final String TAG = "CreateMeadleActivity";
     private final static int
             CONNECTION_FAILURE_RESOLUTION_REQUEST = 9000;
@@ -103,6 +104,7 @@ public class CreateMeadleActivity extends MeadleActivity implements GetGcmRegLis
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(requestCode == 123) {
             Log.d("STATE", "Meadle created." );
+            MeadleDataManager.enterMeadleWaiting(this);
             Intent waiting = new Intent(this, WaitingActivity.class);
             startActivity(waiting);
         }

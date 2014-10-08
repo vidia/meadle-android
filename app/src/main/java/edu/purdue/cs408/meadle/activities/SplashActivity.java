@@ -23,24 +23,38 @@ public class SplashActivity extends MeadleActivity {
         Bundle extras = new Bundle();
         Class<? extends Activity> activity = MainActivity.class;
 
-        if(MeadleDataManager.getMeadleId(this) == null) {
-            //There is no current meadle
-            activity = MainActivity.class;
-        }
-        else if(MeadleDataManager.isMeadleWaiting(this)) {
-            //Meadle is waiting on members to join.
-            extras.putString("waitingfor", "USER_JOINED");
-            activity = WaitingActivity.class;
-        } else if(MeadleDataManager.isMeadleVoting(this)) {
-            //Current user is voting and has not submitted his/her votes.
-            activity = VoteActivity.class;
-        } else if(MeadleDataManager.isWaitingResult(this)) {
-            //This user has voted and is waiting on this meadle's result
-            extras.putString("waitingfor", "result");
-            activity = WaitingActivity.class;
-        } else if(MeadleDataManager.hasResult(this)) {
-            //This meadle has been complete and the user has not cleared the data.
-            activity = ResultsActivity.class;
+
+        switch(MeadleDataManager.getCurrentState(this)) {
+            case NONE:
+
+                //There is no current meadle
+                activity = MainActivity.class;
+                break;
+
+            case WAITING:
+
+                //Meadle is waiting on members to join.
+                extras.putString("waitingfor", "USER_JOINED");
+                activity = WaitingActivity.class;
+                break;
+
+            case VOTING:
+
+                //Current user is voting and has not submitted his/her votes.
+                activity = VoteActivity.class;
+                break;
+
+            case WAITING_RESULT:
+
+                //This user has voted and is waiting on this meadle's result
+                extras.putString("waitingfor", "result");
+                activity = WaitingActivity.class;
+                break;
+
+            case HAS_RESULT:
+                //This meadle has been complete and the user has not cleared the data.
+                activity = ResultsActivity.class;
+                break;
 
         }
 

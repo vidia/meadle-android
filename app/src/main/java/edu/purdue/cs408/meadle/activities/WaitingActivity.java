@@ -33,16 +33,13 @@ public class WaitingActivity extends MeadleActivity {
         if(message != null) {
             if (message.equals("USER_JOINED")) { //TODO: This should be for ready to vote.
                 Log.d("STATE", "Waiting activity, USER JOINED" );
-                //Notification has been received that says all people have joined a meadle. Time to vote.
-                MeadleDataManager.setMeadleDoneWaiting(this);
-                MeadleDataManager.setMeadleVoting(this);
 
                 Intent i = new Intent(this, VoteActivity.class);
                 startActivity(i);
             } else if (message.equals("result")) { //TODO: Change this to the new "phase" value
                 Log.d("STATE", "Waiting activity. Meadle is ready" );
                 //Notification has been received that alerts meadle is complete
-                MeadleDataManager.setHaveResult(this);
+                MeadleDataManager.setHasResult(this);
 
                 Intent i = new Intent(this, ResultsActivity.class);
                 startActivity(i);
