@@ -1,58 +1,41 @@
 package edu.purdue.cs408.meadle.adapters;
 
-import android.app.Activity;
 import android.content.Context;
 import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
-
-import com.nhaarman.listviewanimations.util.Swappable;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+
+import edu.purdue.cs408.meadle.models.YelpLocation;
 
 /**
  * Created by david on 9/18/14.
  */
-public class StableArrayAdapter<T> extends ArrayAdapter<T> implements Swappable {
+public class StableArrayAdapter extends ArrayAdapter<YelpLocation> {
 
-    private ArrayList<T> mItems;
+    final int INVALID_ID = -1;
 
-    public StableArrayAdapter(Context context, int listItem, int textView, List<T> data) {
-        super(context, listItem, textView);
-        mItems = new ArrayList<T>(data.size());
-        mItems.addAll(data);
+    HashMap<YelpLocation, Integer> mIdMap = new HashMap<YelpLocation, Integer>();
+
+    public StableArrayAdapter(Context context, int listItem, List<YelpLocation> objects) {
+        super(context, listItem, objects);
+        for (int i = 0; i < objects.size(); ++i) {
+            mIdMap.put(objects.get(i), i);
+        }
+    }
+
+    @Override
+    public long getItemId(int position) {
+        if (position < 0 || position >= mIdMap.size()) {
+            return INVALID_ID;
+        }
+        YelpLocation item = getItem(position);
+        return mIdMap.get(item);
     }
 
     @Override
     public boolean hasStableIds() {
         return true;
-    }
-
-    @Override
-    public T getItem(int position) {
-        return mItems.get(position);
-    }
-
-    @Override
-    public int getPosition(T item) {
-        return mItems.indexOf(item);
-    }
-
-    @Override
-    public long getItemId(int position) {
-        return getItem(position).hashCode();
-    }
-
-    @Override
-    public int getCount() {
-        return mItems.size();
-    }
-
-    @Override
-    public void swapItems(int ifirst, int isecond) {
-        //TODO: Change to costom sort
-        Collections.swap(mItems, ifirst, isecond);
     }
 }

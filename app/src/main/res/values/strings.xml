@@ -12,5 +12,6 @@
     <string name="title_activity_create_meadle">CreateMeadleActivity</string>
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_splash">SplashActivity</string>
+    <string name="title_activity_meeting_point">MeetingPointActivity</string>
 
 </resources>

@@ -109,7 +109,8 @@ public class MeadleDataManager {
         preferences(c).edit().putBoolean("waiting", true).commit();
     }
 
-    private static void setMeadleDoneWaiting(Context c) {
+    //TODO: This should not be used.
+    public  static void setMeadleDoneWaiting(Context c) {
         preferences(c).edit().putBoolean("waiting", false).commit();
     }
 

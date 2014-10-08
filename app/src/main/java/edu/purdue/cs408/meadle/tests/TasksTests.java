@@ -69,35 +69,35 @@ public class TasksTests extends InstrumentationTestCase implements OnStartMeetin
 
     }
 
-    public void test_JoinMeetingTask(){
-        signal = new CountDownLatch(1);
-        final JoinMeetingTask task = new JoinMeetingTask("23aszrehtzkt9",new UserLocation("android_join_test_user",50.50,60.60),this);
-        try{
-            runTestOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    task.execute();
-                }
-            });
+//    public void test_JoinMeetingTask(){
+//        signal = new CountDownLatch(1);
+//        final JoinMeetingTask task = new JoinMeetingTask("23aszrehtzkt9",new UserLocation("android_join_test_user",50.50,60.60),this);
+//        try{
+//            runTestOnUiThread(new Runnable() {
+//                @Override
+//                public void run() {
+//                    task.execute();
+//                }
+//            });
+//
+//        }catch(Throwable throwable){
+//
+//        }
+//    }
 
-        }catch(Throwable throwable){
-
-        }
-    }
-
-    public void test_YelpDataTaskShouldReturnCorrectData(){
-        signal = new CountDownLatch(1);
-        final YelpDataTask task = new YelpDataTask(this);
-        try{
-            runTestOnUiThread(new Runnable() {
-                @Override
-                public void run() { task.execute("dt-kirbys-lafayette-2");
-                }
-            });
-        } catch(Throwable throwable) {
-
-        }
-    }
+//    public void test_YelpDataTaskShouldReturnCorrectData(){
+//        signal = new CountDownLatch(1);
+//        final YelpDataTask task = new YelpDataTask(this);
+//        try{
+//            runTestOnUiThread(new Runnable() {
+//                @Override
+//                public void run() { task.execute("dt-kirbys-lafayette-2");
+//                }
+//            });
+//        } catch(Throwable throwable) {
+//
+//        }
+//    }
 
     @Override
     public void onStartMeetingFinished(JSONObject jsonObject) {

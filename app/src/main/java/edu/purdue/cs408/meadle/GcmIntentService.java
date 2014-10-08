@@ -41,9 +41,10 @@ public class GcmIntentService extends IntentService {
 
                 Log.i("GcmIntentService", "Received: " + extras.toString());
 
+                //MeadleDataManager.setMeadleDoneWaiting(this);
 
+                Log.d("GCM STATE", MeadleDataManager.getCurrentState(this).toString()); 
 
-                MeadleDataManager.startVoting(this);
                 //TODO: If the state is waiting for users.
                 if(MeadleDataManager.isWaitingActivityActive()) {
                     broadcastToWaitingActivity(intent, extras);
@@ -66,6 +67,8 @@ public class GcmIntentService extends IntentService {
         i.putExtras(extras);
         sendBroadcast(i);
     }
+
+
 
     // Put the message into a notificaiton and post if.
     private void sendNotification(String phase) {

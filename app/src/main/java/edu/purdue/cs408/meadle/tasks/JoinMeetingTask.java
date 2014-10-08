@@ -1,5 +1,6 @@
 package edu.purdue.cs408.meadle.tasks;
 
+import android.content.Context;
 import android.net.Uri;
 import android.os.AsyncTask;
 
@@ -17,6 +18,7 @@ import java.io.IOException;
 import edu.purdue.cs408.meadle.Constants;
 import edu.purdue.cs408.meadle.interfaces.OnJoinMeetingFinishedListener;
 import edu.purdue.cs408.meadle.models.UserLocation;
+import edu.purdue.cs408.meadle.util.manager.MeadleDataManager;
 
 /**
  * Created by kyle on 9/17/14.
@@ -28,13 +30,15 @@ public class JoinMeetingTask extends AsyncTask<Void, Void, String> {
     private String meadleId;
     private double lat;
     private double lng;
+    private Context context;
 
-    public JoinMeetingTask(String meadleId,UserLocation location,OnJoinMeetingFinishedListener listener){
+    public JoinMeetingTask(Context context, String meadleId,UserLocation location,OnJoinMeetingFinishedListener listener){
         this.listener = listener;
         this.userId = location.getUserId();
         this.meadleId = meadleId;
         this.lat = location.getLat();
         this.lng = location.getLng();
+        this.context = context;
     }
 
     @Override
@@ -75,6 +79,7 @@ public class JoinMeetingTask extends AsyncTask<Void, Void, String> {
             JSONObject jsonObject = null;
             try {
                  jsonObject = new JSONObject(result);
+                MeadleDataManager.putMeadleId(context, meadleId);
             } catch (JSONException e) {
                 e.printStackTrace();
             }

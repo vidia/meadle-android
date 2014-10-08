@@ -8,14 +8,11 @@
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context="edu.purdue.cs408.meadle.fragments.VoteFragment">
 
-    <com.nhaarman.listviewanimations.itemmanipulation.DynamicListView
+    <edu.purdue.cs408.meadle.util.DynList
         android:id="@android:id/list"
+        android:background="#0000"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_centerInParent="true"
-        android:clipToPadding="false"
-        android:divider="@null"
-        android:paddingBottom="48dp" />
+        android:layout_height="wrap_content" />
 
     <RelativeLayout
         android:id="@android:id/empty"

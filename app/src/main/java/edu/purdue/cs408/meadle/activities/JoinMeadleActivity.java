@@ -90,7 +90,7 @@ public class JoinMeadleActivity extends MeadleActivity implements GooglePlayServ
     public void OnRegIdReceived(String regId) {
         Location l = locationClient.getLastLocation();
         UserLocation location = new UserLocation(regId,l.getLatitude(),l.getLongitude()); //TODO: Create location.
-        JoinMeetingTask task = new JoinMeetingTask(meadleId,location,this);
+        JoinMeetingTask task = new JoinMeetingTask(this, meadleId,location,this);
         task.execute();
 
     }
