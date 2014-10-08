@@ -27,6 +27,7 @@ public class WaitingActivity extends MeadleActivity {
 
     private void openNextActivity(Intent intent) {
         // Extract data included in the Intent
+
         String message = intent.getStringExtra("phase");
 
         Log.d("STATE", "Waiting activity, phase is -> " + message );
