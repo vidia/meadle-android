@@ -1,10 +1,15 @@
 package edu.purdue.cs408.meadle.activities;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.location.Address;
+import android.location.Geocoder;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 
 import com.loopj.android.image.SmartImage;
@@ -15,7 +20,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.w3c.dom.Text;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 
 import edu.purdue.cs408.meadle.R;
 import edu.purdue.cs408.meadle.adapters.YelpArrayAdapter;
@@ -96,25 +104,36 @@ public class MeetingPointActivity extends MeadleActivity implements OnYelpDataTa
 
 
 
-        double lat = 0;
-        double lng = 0;
 
+
+
+
+        Geocoder geocoder = new Geocoder(this);
+        List<Address> addressList = null;
         try {
-            JSONObject coordinates = jLocation.getJSONObject("coordinate");
-            lat = coordinates.getDouble("latitude");
-            lng = coordinates.getDouble("longitude");
-        } catch (JSONException e) {
+            addressList = geocoder.getFromLocationName(street+ " " + city,1);
+        } catch (IOException e) {
             e.printStackTrace();
         }
 
+        final double lat = addressList.get(0).getLatitude();
+        final double lng = addressList.get(0).getLongitude();
+
+
 
         String url = "http://maps.google.com/maps/api/staticmap?center=" + lat + "," + lng + "&zoom=16&scale=2&size=800x500&maptype=roadmap"+"&markers=color:blue%7C"+lat+","+lng;
-        //Log.d("url",url);
+
 
         SmartImageView imageView = (SmartImageView) findViewById(R.id.meeting_point_map_image_view);
         imageView.setImageUrl(url);
 
-
-
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String uri = String.format(Locale.ENGLISH, "geo:%f,%f?z=17&q=%f,%f", lat,lng,lat,lng);
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+                startActivity(intent);
+            }
+        });
     }
 }
