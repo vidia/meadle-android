@@ -16,7 +16,9 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:id="@+id/linearLayout"></LinearLayout>
+        android:id="@+id/linearLayout">
+
+        </LinearLayout>
 
     <TextView
         android:layout_width="wrap_content"
@@ -26,7 +28,8 @@
         android:shadowDx="3"
         android:shadowDy="3"
         android:shadowRadius="1"
-        android:textSize="40sp"
+        android:singleLine="true"
+        android:textSize="30sp"
         android:textColor="@color/purple"
         android:id="@+id/meetingPointTextView"
         android:layout_below="@+id/linearLayout"
