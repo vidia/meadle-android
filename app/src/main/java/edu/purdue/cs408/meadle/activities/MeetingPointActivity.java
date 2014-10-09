@@ -30,6 +30,7 @@ import edu.purdue.cs408.meadle.adapters.YelpArrayAdapter;
 import edu.purdue.cs408.meadle.interfaces.OnYelpDataTaskFinishedListener;
 import edu.purdue.cs408.meadle.models.YelpLocation;
 import edu.purdue.cs408.meadle.tasks.YelpDataTask;
+import edu.purdue.cs408.meadle.util.manager.MeadleDataManager;
 
 public class MeetingPointActivity extends MeadleActivity implements OnYelpDataTaskFinishedListener {
     private final static String TAG = "MeetingPointActivity";
@@ -66,6 +67,12 @@ public class MeetingPointActivity extends MeadleActivity implements OnYelpDataTa
         int id = item.getItemId();
         if (id == R.id.action_settings) {
             return true;
+        }
+
+        if(id == R.id.finish_meeting){
+            MeadleDataManager.clear(this);
+            Intent intent = new Intent(this,MainActivity.class);
+            startActivity(intent);
         }
         return super.onOptionsItemSelected(item);
     }
