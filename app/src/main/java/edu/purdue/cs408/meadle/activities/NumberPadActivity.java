@@ -1,5 +1,8 @@
 package edu.purdue.cs408.meadle.activities;
 
+import android.content.Intent;
+import android.content.IntentSender;
+import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,15 +12,29 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesClient;
+import com.google.android.gms.location.LocationClient;
 import com.joanzapata.android.iconify.IconDrawable;
 import com.joanzapata.android.iconify.Iconify;
 
+import org.json.JSONObject;
+
 import edu.purdue.cs408.meadle.Constants;
 import edu.purdue.cs408.meadle.R;
+import edu.purdue.cs408.meadle.interfaces.GetGcmRegListener;
+import edu.purdue.cs408.meadle.interfaces.OnJoinMeetingFinishedListener;
+import edu.purdue.cs408.meadle.models.UserLocation;
+import edu.purdue.cs408.meadle.tasks.JoinMeetingTask;
+import edu.purdue.cs408.meadle.util.manager.GcmManager;
+import edu.purdue.cs408.meadle.util.manager.MeadleDataManager;
 
 
-public class NumberPadActivity extends MeadleActivity implements View.OnClickListener,View.OnLongClickListener {
+public class NumberPadActivity extends MeadleActivity implements View.OnClickListener,View.OnLongClickListener, GooglePlayServicesClient.ConnectionCallbacks, GooglePlayServicesClient.OnConnectionFailedListener, GetGcmRegListener, OnJoinMeetingFinishedListener {
     private static  final String TAG = "NumperPadActivity";
+    private  LocationClient locationClient;
+    private final static int
+            CONNECTION_FAILURE_RESOLUTION_REQUEST = 9000;
     private static final int[] numberButtonRes = new int[] {
             R.id.numberpad_0,
             R.id.numberpad_1,
@@ -38,6 +55,8 @@ public class NumberPadActivity extends MeadleActivity implements View.OnClickLis
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_number_pad);
+
+        findViewById(R.id.accept_button).setOnClickListener(this);
 
         for(int res : numberButtonRes) {
             findViewById(res).setOnClickListener(this);
@@ -108,6 +127,13 @@ public class NumberPadActivity extends MeadleActivity implements View.OnClickLis
             case R.id.btn_num_pad_delete:
                 //TODO: Allow the back button to be spammed
                 typeCharacter((char)8); //delete
+                break;
+
+            case R.id.accept_button:
+                joinMeadle();
+                break;
+
+
         }
     }
 
@@ -143,6 +169,13 @@ public class NumberPadActivity extends MeadleActivity implements View.OnClickLis
         }
     }
 
+    private void joinMeadle(){
+        // Starting a meeting will begin once GPS has connected
+        locationClient = new LocationClient(this,this,this);
+        locationClient.connect();
+
+    }
+
     @Override
     public boolean onLongClick(View v) {
         switch(v.getId()) {
@@ -155,4 +188,65 @@ public class NumberPadActivity extends MeadleActivity implements View.OnClickLis
     }
 
 
+    @Override
+    public void onConnected(Bundle bundle) {
+        Log.d(TAG, "GPS Connected");
+        // Get the GCM RegID, wait for listener to respond
+        GcmManager gcmManager = new GcmManager(this);
+        gcmManager.getRegID(this);
+
+    }
+
+    @Override
+    public void onDisconnected() {
+        Log.d(TAG, "GPS Disconnected");
+
+
+    }
+
+    @Override
+    public void onConnectionFailed(ConnectionResult connectionResult) {
+        if (connectionResult.hasResolution()) {
+            try {
+                // Start an Activity that tries to resolve the error
+                connectionResult.startResolutionForResult(
+                        this,
+                        CONNECTION_FAILURE_RESOLUTION_REQUEST);
+                /*
+                 * Thrown if Google Play services canceled the original
+                 * PendingIntent
+                 */
+            } catch (IntentSender.SendIntentException e) {
+                // Log the error
+                e.printStackTrace();
+            }
+        } else {
+            /*
+             * If no resolution is available, display a dialog to the
+             * user with the error.
+             */
+            Log.d(TAG, "Unrecoverable GPS error");
+        }
+
+    }
+
+    @Override
+    public void OnRegIdReceived(String regId) {
+        EditText textBox = (EditText) findViewById(R.id.textBox);
+        String meadleId = textBox.getText().toString();
+        Location l = locationClient.getLastLocation();
+        UserLocation location = new UserLocation(regId,l.getLatitude(),l.getLongitude()); //TODO: Create location.
+        JoinMeetingTask task = new JoinMeetingTask(this, meadleId,location,this);
+        task.execute();
+
+
+    }
+
+    @Override
+    public void onJoinMeetingFinished(JSONObject jsonResp) {
+        Log.d("STATE", "Meadle joined" );
+        MeadleDataManager.enterMeadleWaiting(this);
+        Intent waiting = new Intent(this, WaitingActivity.class);
+        startActivity(waiting);
+    }
 }
