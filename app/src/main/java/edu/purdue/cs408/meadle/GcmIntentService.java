@@ -48,9 +48,11 @@ public class GcmIntentService extends IntentService {
                 //TODO: If the state is waiting for users.
                 if(MeadleDataManager.isWaitingActivityActive()) {
                     broadcastToWaitingActivity(intent, extras);
-                } else {
                     sendNotification(extras.getString("phase"));
                 }
+                
+                sendNotification(extras.getString("phase"));
+
 
 
             } else {
