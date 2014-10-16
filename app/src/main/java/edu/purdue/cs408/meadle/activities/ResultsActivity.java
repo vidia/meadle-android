@@ -6,7 +6,7 @@ import android.os.Bundle;
 /**
  * Created by david on 9/28/14.
  */
-public class ResultsActivity extends MeadleActivity {
+public class ResultsActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -142,7 +142,6 @@ public class NumberPadActivity extends MeadleActivity implements View.OnClickLis
         if(c != DELETE_KEY) {
             if(typeView.getText().length() < Constants.MEADLE_CODE_LENGTH) {
                 typeView.getText().append(c);
-                invalidateCheckButton();
             }
         } else {
             Log.d("TYPING", "Deleting");
