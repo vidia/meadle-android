@@ -26,7 +26,7 @@ public class YelpLocation {
             this.yelpObject = location;
             this.id = location.getString("id");
             this.name = location.getString("name");
-            this.image_url = location.has("image_url") ? location.getString("image_url") : null;
+            this.image_url = location.getString("image_url");
             this.shortDescription = location.getString("snippet_text");
             this.categories = new ArrayList<String>();
             JSONArray yelpCategories = location.getJSONArray("categories");

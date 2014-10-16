@@ -27,9 +27,9 @@ public class StableArrayAdapter extends ArrayAdapter<YelpLocation> {
 
     @Override
     public long getItemId(int position) {
-        if (position < 0 || position >= mIdMap.size()) {
-            return INVALID_ID;
-        }
+//        if (position < 0 || position >= mIdMap.size()) {
+//            return INVALID_ID;
+//        }
         YelpLocation item = getItem(position);
         return mIdMap.get(item);
     }

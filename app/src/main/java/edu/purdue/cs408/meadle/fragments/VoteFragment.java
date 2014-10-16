@@ -171,7 +171,7 @@ public class VoteFragment extends ListFragment implements OnYelpDataTaskFinished
                 e.printStackTrace();
             }
         }
-        new YelpDataTask(this).execute(locations);
+        new YelpDataTask(this).execute(YelpTestData.IDS);
 
     }
 
