@@ -57,8 +57,7 @@
         <activity
             android:name=".activities.CreateMeadleActivity"
             android:label="Create a new Meadle"
-            android:parentActivityName=".activities.MainActivity"
-            android:screenOrientation="portrait" >
+            android:parentActivityName=".activities.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="edu.purdue.cs408.meadle.activities.MainActivity" />
