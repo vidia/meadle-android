@@ -74,6 +74,16 @@
 
                 <action android:name="android.intent.action.VIEW" />
             </intent-filter>
+            <intent-filter>
+                <data
+                    android:host="www.google.com"
+                    android:scheme="http" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <action android:name="android.intent.action.VIEW" />
+            </intent-filter>
         </activity>
 
         <receiver
