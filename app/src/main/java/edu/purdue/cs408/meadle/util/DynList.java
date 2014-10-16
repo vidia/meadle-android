@@ -378,10 +378,8 @@ public class DynList extends ListView {
     }
 
     private void swapElements(ArrayList arrayList, int indexOne, int indexTwo) {
-        Log.d("DynList","Swapping");
-        Object temp = arrayList.get(indexOne);
-        arrayList.set(indexOne, arrayList.get(indexTwo));
-        arrayList.set(indexTwo, temp);
+        arrayList.set(indexOne,arrayList.get(indexTwo));
+        arrayList.set(indexTwo,arrayList.get(indexOne));
     }
 
 
