@@ -39,16 +39,14 @@
         <activity
             android:name=".activities.NumberPadActivity"
             android:label="@string/title_activity_number_pad"
-            android:parentActivityName=".activities.MainActivity"
-            android:screenOrientation="portrait" >
+            android:parentActivityName=".activities.MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="edu.purdue.cs408.meadle.MainActivity" />
         </activity>
         <activity
             android:name=".activities.VoteActivity"
-            android:label="@string/title_activity_vote"
-            android:screenOrientation="portrait" />
+            android:label="@string/title_activity_vote" />
         <activity
             android:name=".activities.WaitingActivity"
             android:label="@string/title_activity_waiting"
