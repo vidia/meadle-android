@@ -39,8 +39,8 @@
             android:gravity="center"
             android:textAppearance="?android:textAppearanceLarge"
             android:textSize="40sp"
-            android:selectAllOnFocus="true"
-            android:textIsSelectable="true"
+            android:selectAllOnFocus="false"
+            android:textIsSelectable="false"
             android:text=""
             android:layout_marginTop="50dp"
             />
