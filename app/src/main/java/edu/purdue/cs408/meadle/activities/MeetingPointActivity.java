@@ -70,7 +70,6 @@ public class MeetingPointActivity extends MeadleActivity implements OnYelpDataTa
         }
 
         if(id == R.id.finish_meeting){
-            MeadleDataManager.clear(this);
             Intent intent = new Intent(this,MainActivity.class);
             startActivity(intent);
         }
