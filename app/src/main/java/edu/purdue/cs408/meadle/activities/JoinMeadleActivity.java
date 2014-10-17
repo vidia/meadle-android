@@ -37,6 +37,12 @@ public class JoinMeadleActivity extends MeadleActivity implements GooglePlayServ
     }
 
     @Override
+    protected void onStop() {
+        // Disconnecting the client invalidates it.
+        super.onStop();
+    }
+
+    @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
     }
