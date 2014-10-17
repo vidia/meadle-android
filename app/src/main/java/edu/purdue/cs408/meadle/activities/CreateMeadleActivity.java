@@ -77,6 +77,8 @@ public class CreateMeadleActivity extends MeadleActivity implements GetGcmRegLis
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         if (id == R.id.action_settings) {
+            Intent i = new Intent(this, CreateMeadleActivity.class);
+            startActivity(i);
             return true;
         }
         return super.onOptionsItemSelected(item);
