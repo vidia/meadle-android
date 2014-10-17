@@ -9,6 +9,17 @@ android {
         exclude 'LICENSE.txt'
     }
 
+    signingConfigs {
+        myConfig {
+            storeFile file("my-release-key.keystore")
+            storePassword "juwK3j98HZguYaiq4nie"
+            keyAlias "alias_name"
+            keyPassword "juwK3j98HZguYaiq4nie"
+        }
+    }
+
+
+
     defaultConfig {
         applicationId "edu.purdue.cs408.meadle"
         minSdkVersion 14
@@ -19,6 +30,8 @@ android {
     buildTypes {
         release {
             runProguard false
+            signingConfig signingConfigs.myConfig
+
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
