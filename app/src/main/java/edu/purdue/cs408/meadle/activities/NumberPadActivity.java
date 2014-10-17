@@ -95,11 +95,13 @@ public class NumberPadActivity extends MeadleActivity implements View.OnClickLis
         switch(v.getId()) {
             case R.id.numberpad_0:
                 typeCharacter('0');
+                typeCharacter('0');
                 break;
             case R.id.numberpad_1:
                 typeCharacter('1');
                 break;
             case R.id.numberpad_2:
+                typeCharacter('2');
                 typeCharacter('2');
                 break;
             case R.id.numberpad_3:
@@ -107,17 +109,20 @@ public class NumberPadActivity extends MeadleActivity implements View.OnClickLis
                 break;
             case R.id.numberpad_4:
                 typeCharacter('4');
+                typeCharacter('4');
                 break;
             case R.id.numberpad_5:
                 typeCharacter('5');
                 break;
             case R.id.numberpad_6:
                 typeCharacter('6');
+                typeCharacter('6');
                 break;
             case R.id.numberpad_7:
                 typeCharacter('7');
                 break;
             case R.id.numberpad_8:
+                typeCharacter('8');
                 typeCharacter('8');
                 break;
             case R.id.numberpad_9:
